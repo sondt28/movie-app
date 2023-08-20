@@ -14,7 +14,10 @@ import com.son.movie.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by lazy {
-        ViewModelProvider(this)[HomeViewModel::class.java]
+        val activity = requireNotNull(activity).application
+        val homeViewModelFactory = HomeViewModelFactory(activity)
+
+        ViewModelProvider(this, homeViewModelFactory)[HomeViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -33,7 +36,11 @@ class HomeFragment : Fragment() {
 
         viewModel.navigationToSelectFilm.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                        it
+                    )
+                )
                 viewModel.displayFilmDetailsComplete()
             }
         })

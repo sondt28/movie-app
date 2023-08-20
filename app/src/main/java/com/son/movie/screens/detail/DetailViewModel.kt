@@ -36,7 +36,7 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
     }
 
     private fun getMovieDetails() {
-        coroutineScope.launch {
+        coroutineScope.launch {Dispatchers.IO
             val movieDetailDeferred = MovieApi.retrofitService.getMovieDetailsAsync(movieId)
             _status.value = MovieDetailsStatus.LOADING
             try {
@@ -50,7 +50,7 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
     }
 
     private fun getTrailer() {
-        coroutineScope.launch {
+        coroutineScope.launch {Dispatchers.IO
 
             try {
                 val movieTrailerDeferred = MovieApi.retrofitService.getTrailerMovieAsync(movieId)

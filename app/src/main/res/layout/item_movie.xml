@@ -19,7 +19,6 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="146dp"
-
             android:scaleType="centerCrop"
             app:imgUrl="@{movie.posterPath}"
             tools:src="@tools:sample/backgrounds/scenic" />

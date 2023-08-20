@@ -3,7 +3,7 @@ package com.son.movie.network
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.son.movie.model.MovieDetails
 import com.son.movie.model.ResultMovieVideo
-import com.son.movie.model.MoviesPage
+import com.son.movie.model.Movies
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -26,7 +26,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MovieApiService {
     @GET("trending/movie/day")
-    fun getTrendingMoviesTodayAsync(@Query("api_key") apiKey: String = API_KEY): Deferred<MoviesPage>
+    fun getTrendingMoviesTodayAsync(@Query("api_key") apiKey: String = API_KEY): Deferred<Movies>
 
     @GET("movie/{movieId}")
     fun getMovieDetailsAsync(
@@ -44,7 +44,7 @@ interface MovieApiService {
     fun getResultSearch(
         @Query("query") query: String,
         @Query("api_key") apiKey: String = API_KEY
-    ): Deferred<MoviesPage>
+    ): Deferred<Movies>
 }
 
 object MovieApi {
