@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.son.movie.model.MovieDetails
+import com.son.movie.model.MovieTrailer
 import com.son.movie.network.MovieApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,13 +26,18 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
     val selectMovie: LiveData<MovieDetails>
         get() = _selectMovie
 
+    private val _movieTrailer = MutableLiveData<MovieTrailer?>()
+    val movieTrailer: LiveData<MovieTrailer?>
+        get() = _movieTrailer
+
     init {
         getMovieDetails()
+        getTrailer()
     }
 
     private fun getMovieDetails() {
         coroutineScope.launch {
-            val movieDetailDeferred = MovieApi.retrofitService.getMovieDetails(movieId)
+            val movieDetailDeferred = MovieApi.retrofitService.getMovieDetailsAsync(movieId)
             _status.value = MovieDetailsStatus.LOADING
             try {
                 _selectMovie.value = movieDetailDeferred.await()
@@ -43,6 +49,18 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
         }
     }
 
+    private fun getTrailer() {
+        coroutineScope.launch {
+
+            try {
+                val movieTrailerDeferred = MovieApi.retrofitService.getTrailerMovieAsync(movieId)
+                val result = movieTrailerDeferred.await()
+                _movieTrailer.value = result.resultVideoMovie.find { it.type == "Trailer" }
+            } catch (t: Throwable) {
+                t.printStackTrace()
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()

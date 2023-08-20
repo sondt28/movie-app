@@ -5,4 +5,6 @@
     <string name="home">Home</string>
     <string name="more">More</string>
     <string name="trending_today">Trending Today</string>
+    <string name="runtime">%d Minutes</string>
+    <string name="youtube_id">%s</string>
 </resources>

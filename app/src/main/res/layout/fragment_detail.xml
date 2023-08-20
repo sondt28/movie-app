@@ -15,38 +15,67 @@
         android:layout_height="match_parent"
         tools:context=".screens.detail.DetailFragment">
 
-        <ImageView
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/ivBackdrop"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            app:imgUrl="@{viewModel.selectMovie.backdropPath}"
+            android:layout_height="wrap_content"
+            app:autoPlay="false"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
-        <ImageView
-            android:id="@+id/ivPoster"
-            android:layout_width="92dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="150dp"
-            android:scaleType="centerCrop"
-            app:imgUrl="@{viewModel.selectMovie.posterPath}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            app:videoPath="@{viewModel.movieTrailer.key}" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:text="@{viewModel.selectMovie.title}"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivPoster"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
             tools:text="Spiderman No Way Home" />
+
+        <TextView
+            android:id="@+id/tvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="12dp"
+            android:text="@{viewModel.selectMovie.releaseDate}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="asdsadasda" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/tvReleaseDate"
+            app:layout_constraintEnd_toStartOf="@id/tvRuntime"
+            app:layout_constraintStart_toEndOf="@id/tvReleaseDate"
+            app:layout_constraintTop_toTopOf="@+id/tvReleaseDate" />
+
+        <TextView
+            android:id="@+id/tvRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvReleaseDate"
+            app:layout_constraintStart_toEndOf="@+id/tvReleaseDate"
+            app:layout_constraintTop_toTopOf="@+id/tvReleaseDate"
+            app:runtimeFormat="@{viewModel.selectMovie.runtime}"
+            tools:text="asdsadasda" />
+
+        <TextView
+            android:id="@+id/tvOverview"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@{viewModel.selectMovie.overview}"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tvReleaseDate"
+            app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
+            tools:text="asdsadasda" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
