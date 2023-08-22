@@ -29,20 +29,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:text="@{viewModel.selectMovie.title}"
-            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
             tools:text="Spiderman No Way Home" />
 
         <TextView
+
             android:id="@+id/tvReleaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
             android:text="@{viewModel.selectMovie.releaseDate}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/startGuideline"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="asdsadasda" />
 
@@ -77,5 +76,18 @@
             app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
             tools:text="asdsadasda" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_normal" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacing_normal" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

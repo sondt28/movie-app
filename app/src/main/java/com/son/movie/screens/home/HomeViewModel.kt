@@ -4,12 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide.init
-import com.son.movie.database.getDatabase
 import com.son.movie.model.Movie
 import com.son.movie.network.MovieApi
-import com.son.movie.repository.MovieRepository
 import com.son.movie.utils.MovieStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,36 +28,40 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val navigationToSelectFilm: LiveData<Int?>
         get() = _navigationToSelectFilm
 
-    private val database = getDatabase(application)
-    private val movieRepository = MovieRepository(database)
+//    private val _navigationToSearchFilm = MutableLiveData<String?>()
+//    val navigationToSearchFilm: LiveData<String?>
+//        get() = _navigationToSearchFilm
 
-    val movies = movieRepository.movies
+//    private val database = getDatabase(application)
+//    private val movieRepository = MovieRepository(database)
+//
+//    val movies = movieRepository.movies
     init {
         getTrendingMoviesToday()
     }
 
-    //    private fun getTrendingMoviesToday() {
-//        coroutineScope.launch {
-//            Dispatchers.IO
-//            val moviesDeferred = MovieApi.retrofitService.getTrendingMoviesTodayAsync()
-//
-//            try {
-//                _status.value = MovieStatus.LOADING
-//                val listResult = moviesDeferred.await()
-//                _status.value = MovieStatus.DONE
-//
-//                _trendingMoviesDay.value = listResult.results
-//            } catch (t: Throwable) {
-//                t.printStackTrace()
-//                _status.value = MovieStatus.ERROR
-//            }
-//        }
-//    }
-    private fun getTrendingMoviesToday() {
+        private fun getTrendingMoviesToday() {
         coroutineScope.launch {
-            movieRepository.refreshMovies()
+            Dispatchers.IO
+            val moviesDeferred = MovieApi.retrofitService.getTrendingMoviesTodayAsync()
+
+            try {
+                _status.value = MovieStatus.LOADING
+                val listResult = moviesDeferred.await()
+                _status.value = MovieStatus.DONE
+
+                _trendingMoviesDay.value = listResult.results
+            } catch (t: Throwable) {
+                t.printStackTrace()
+                _status.value = MovieStatus.ERROR
+            }
         }
     }
+//    private fun getTrendingMoviesToday() {
+//        coroutineScope.launch {
+//            movieRepository.refreshMovies()
+//        }
+//    }
 
     fun displayFilmDetails(movieId: Int) {
         _navigationToSelectFilm.value = movieId
@@ -70,7 +70,13 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun displayFilmDetailsComplete() {
         _navigationToSelectFilm.value = null
     }
-
+//    fun displaySearchFilm(query: String?) {
+//        _navigationToSearchFilm.value = query
+//    }
+//
+//    fun displaySearchFilmComplete() {
+//        _navigationToSearchFilm.value = null
+//    }
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

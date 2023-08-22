@@ -3,7 +3,13 @@
     <style name="Base.Theme.Movie" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/lobster</item>
+        <item name="textAppearanceHeadline6">@style/CustomHeadline6</item>
     </style>
 
     <style name="Theme.Movie" parent="Base.Theme.Movie" />
+
+    <style name="CustomHeadline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

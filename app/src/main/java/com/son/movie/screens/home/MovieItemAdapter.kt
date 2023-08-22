@@ -23,7 +23,7 @@ class MovieItemAdapter(private val onClickListener: OnclickListener) :
         holder.bind(movie)
     }
 
-    inner class MovieItemViewHolder(val binding: ItemMovieBinding) :
+    inner class MovieItemViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.movie = movie

@@ -8,14 +8,24 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.son.movie.R
 import com.son.movie.model.Movie
+import com.son.movie.model.Movies
 import com.son.movie.screens.home.MovieItemAdapter
+import com.son.movie.screens.search.SearchItemAdapter
+import com.son.movie.screens.search.SearchResultStatus
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
+@BindingAdapter("listSearch")
+fun bindSearchRecyclerView(recyclerView: RecyclerView, data: Movies?) {
+    val adapter = recyclerView.adapter as SearchItemAdapter
+    adapter.submitList(data?.results)
+}
 
 @BindingAdapter("videoPath")
 fun bindVideoId(youtubePlayerView: YouTubePlayerView, videoId: String?) {
@@ -27,6 +37,7 @@ fun bindVideoId(youtubePlayerView: YouTubePlayerView, videoId: String?) {
         })
     }
 }
+
 @BindingAdapter("runtimeFormat")
 fun bindRuntimeFormat(textView: TextView, runtime: Int?) {
     runtime?.let {
@@ -52,6 +63,23 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
         ).into(imgView)
     }
 }
+@BindingAdapter("searchStatus")
+fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: SearchResultStatus?) {
+    when (status) {
+        SearchResultStatus.ERROR -> {
+
+        }
+        SearchResultStatus.DONE -> {
+            shimmerFrameLayout.visibility = View.GONE
+        }
+        SearchResultStatus.LOADING -> {
+            shimmerFrameLayout.visibility = View.VISIBLE
+        }
+        else -> {
+
+        }
+    }
+}
 
 @BindingAdapter("movieStatus")
 fun bindStatus(statusImageView: ImageView, status: MovieStatus?) {
@@ -67,7 +95,7 @@ fun bindStatus(statusImageView: ImageView, status: MovieStatus?) {
 
         MovieStatus.LOADING -> {
             statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_broken_image)
+            statusImageView.setImageResource(R.drawable.loading_animation)
         }
 
         else -> {

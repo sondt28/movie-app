@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.son.movie.screens.detail.DetailFragment"
-        android:label="Details"
+        android:label="Movie Details"
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="movieId"
@@ -37,6 +37,13 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.son.movie.screens.search.SearchFragment"
-        android:label="Search Result"
-        tools:layout="@layout/fragment_search" />
+        android:label="Search Movie"
+        tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

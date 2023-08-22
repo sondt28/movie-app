@@ -4,6 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide.init
+import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.network.MovieApi
 import kotlinx.coroutines.CoroutineScope
@@ -12,31 +15,44 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 enum class SearchResultStatus { LOADING, ERROR, DONE }
-class SearchViewModel(val query: String, app: Application) : AndroidViewModel(app) {
+class SearchViewModel : ViewModel() {
 
     private val viewModelJob = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    private val _status = MutableLiveData<SearchResultStatus>()
+    val status: LiveData<SearchResultStatus>
+        get() = _status
+
     private val _resultSearch = MutableLiveData<Movies>()
     val resultSearch: LiveData<Movies>
         get() = _resultSearch
-    init {
-        getSearchResult()
-    }
 
+    private val _navigateToMovieDetails = MutableLiveData<Int?>()
+    val navigateToMovieDetails: LiveData<Int?>
+        get() = _navigateToMovieDetails
 
-
-    private fun getSearchResult() {
+    fun getSearchResult(query: String) {
         coroutineScope.launch {
             Dispatchers.IO
+            _status.value = SearchResultStatus.LOADING
             try {
-                val searchResultDefferred = MovieApi.retrofitService.getResultSearch(query)
-                _resultSearch.value = searchResultDefferred.await()
-
+                val searchResultDeferred = MovieApi.retrofitService.getResultSearch(query)
+                _resultSearch.value = searchResultDeferred.await()
+                _status.value = SearchResultStatus.DONE
             } catch (t: Throwable) {
                 t.printStackTrace()
+                _status.value = SearchResultStatus.ERROR
             }
         }
+    }
+
+    fun displayDetailsFilm(movieId: Int) {
+        _navigateToMovieDetails.value = movieId
+    }
+
+    fun displayDetailsFilmComplete() {
+        _navigateToMovieDetails.value = null
     }
 
     override fun onCleared() {
