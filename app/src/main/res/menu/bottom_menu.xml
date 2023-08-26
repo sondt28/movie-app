@@ -6,12 +6,12 @@
         android:title="@string/home" />
     <item
         android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_two"
         android:title="@string/search"/>
 
     <item
         android:id="@+id/moreFragment"
-        android:icon="@drawable/ic_hamburger"
+        android:icon="@drawable/ic_save"
         android:title="@string/more" />
 
 </menu>

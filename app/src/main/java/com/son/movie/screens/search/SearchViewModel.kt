@@ -1,12 +1,8 @@
 package com.son.movie.screens.search
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide.init
-import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.network.MovieApi
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +33,7 @@ class SearchViewModel : ViewModel() {
             Dispatchers.IO
             _status.value = SearchResultStatus.LOADING
             try {
-                val searchResultDeferred = MovieApi.retrofitService.getResultSearch(query)
+                val searchResultDeferred = MovieApi.retrofitService.getResultSearchAsync(query)
                 _resultSearch.value = searchResultDeferred.await()
                 _status.value = SearchResultStatus.DONE
             } catch (t: Throwable) {

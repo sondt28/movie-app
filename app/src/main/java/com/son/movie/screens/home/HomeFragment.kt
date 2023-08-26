@@ -3,23 +3,19 @@ package com.son.movie.screens.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayoutMediator
 import com.son.movie.R
 import com.son.movie.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var demoMovieAdapter: DemoMovieAdapter
+
     private val viewModel: HomeViewModel by lazy {
         val activity = requireNotNull(activity).application
         val homeViewModelFactory = HomeViewModelFactory(activity)
@@ -39,6 +35,13 @@ class HomeFragment : Fragment() {
             viewModel.displayFilmDetails(it.id)
         })
 
+        setupTagLayout()
+        handleObserver()
+
+        return binding.root
+    }
+
+    private fun handleObserver() {
         viewModel.navigationToSelectFilm.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
@@ -47,7 +50,19 @@ class HomeFragment : Fragment() {
                 viewModel.displayFilmDetailsComplete()
             }
         })
+    }
 
-        return binding.root
+    private fun setupTagLayout() {
+        demoMovieAdapter = DemoMovieAdapter(this)
+        binding.pager.adapter = demoMovieAdapter
+
+        TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
+            when (position) {
+                0 -> tab.text = getString(R.string.now_playing)
+                1 -> tab.text = getString(R.string.upcoming)
+                2 -> tab.text = getString(R.string.top_rated)
+                3 -> tab.text = getString(R.string.popular)
+            }
+        }.attach()
     }
 }

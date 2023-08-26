@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Movie" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Base.Theme.Movie" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:fontFamily">@font/lobster</item>
+        <item name="colorPrimary">@color/dark_navy_blue</item>
+        <item name="android:fontFamily">@font/poppins</item>
         <item name="textAppearanceHeadline6">@style/CustomHeadline6</item>
     </style>
 
@@ -12,4 +12,8 @@
     <style name="CustomHeadline6" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="Indicator" parent="ShapeAppearance.Material3.NavigationBarView.ActiveIndicator">
+        <item name="android:color">@color/dark_navy_blue</item>
+    </style>
+
 </resources>

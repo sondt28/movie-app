@@ -16,16 +16,32 @@ import com.son.movie.R
 import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.screens.home.MovieItemAdapter
+import com.son.movie.screens.home.MovieItemTypeAdapter
 import com.son.movie.screens.search.SearchItemAdapter
 import com.son.movie.screens.search.SearchResultStatus
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
+@BindingAdapter("listTypeMovies")
+fun bindNowPlayingRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
+    val adapter = recyclerView.adapter as MovieItemTypeAdapter
+    adapter.submitList(data)
+}
 
 @BindingAdapter("listSearch")
 fun bindSearchRecyclerView(recyclerView: RecyclerView, data: Movies?) {
     val adapter = recyclerView.adapter as SearchItemAdapter
     adapter.submitList(data?.results)
 }
+
+//@BindingAdapter("checkResult")
+//fun checkSearchResult(textView: TextView, searchResult: Movies?) {
+//    if (searchResult?.results.isNullOrEmpty()) {
+//        textView.text = R.string.no_results_found.toString()
+//    } else {
+//        textView.text = ""
+//    }
+//}
 
 @BindingAdapter("videoPath")
 fun bindVideoId(youtubePlayerView: YouTubePlayerView, videoId: String?) {
@@ -63,20 +79,20 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
         ).into(imgView)
     }
 }
-@BindingAdapter("searchStatus")
-fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: SearchResultStatus?) {
+@BindingAdapter("shimmer")
+fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: MovieStatus?) {
     when (status) {
-        SearchResultStatus.ERROR -> {
+        MovieStatus.ERROR -> {
 
         }
-        SearchResultStatus.DONE -> {
+        MovieStatus.DONE -> {
             shimmerFrameLayout.visibility = View.GONE
         }
-        SearchResultStatus.LOADING -> {
+        MovieStatus.LOADING -> {
             shimmerFrameLayout.visibility = View.VISIBLE
         }
         else -> {
-
+            shimmerFrameLayout.visibility = View.VISIBLE
         }
     }
 }

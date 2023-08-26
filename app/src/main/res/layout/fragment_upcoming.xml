@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.son.movie.screens.home.viewpager.upcoming.UpcomingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".screens.home.viewpager.upcoming.UpcomingFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcMovies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:listTypeMovies="@{viewModel.movies}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

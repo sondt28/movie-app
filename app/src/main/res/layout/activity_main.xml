@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/dark_navy_blue"
         tools:context=".MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -14,21 +15,30 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintBottom_toTopOf="@+id/vLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/nav_graph" />
 
+        <View
+            android:id="@+id/vLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/fresh_blue"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+            android:background="@color/dark_navy_blue"
+            app:itemActiveIndicatorStyle="@style/Indicator"
+            app:itemIconTint="@color/bottom_view_color"
+            app:itemRippleColor="@color/dark_navy_blue"
+            app:itemTextColor="@color/bottom_view_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white"
             app:menu="@menu/bottom_menu" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -41,10 +41,22 @@ interface MovieApiService {
     ): Deferred<ResultMovieVideo>
 
     @GET("search/movie")
-    fun getResultSearch(
+    fun getResultSearchAsync(
         @Query("query") query: String,
         @Query("api_key") apiKey: String = API_KEY
     ): Deferred<Movies>
+
+    @GET("movie/now_playing")
+    fun getNowPlayingMoviesAsync(@Query("api_key") apiKey: String = API_KEY): Deferred<Movies>
+
+    @GET("movie/upcoming")
+    fun getUpcomingMoviesAsync(@Query("api_key") apiKey: String = API_KEY): Deferred<Movies>
+
+    @GET("movie/top_rated")
+    fun getTopRatedMoviesAsync(@Query("api_key") apiKey: String = API_KEY): Deferred<Movies>
+
+    @GET("movie/popular")
+    fun getPopularMoviesAsync(@Query("api_key") apiKey: String = API_KEY): Deferred<Movies>
 }
 
 object MovieApi {

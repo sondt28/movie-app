@@ -28,14 +28,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val navigationToSelectFilm: LiveData<Int?>
         get() = _navigationToSelectFilm
 
-//    private val _navigationToSearchFilm = MutableLiveData<String?>()
-//    val navigationToSearchFilm: LiveData<String?>
-//        get() = _navigationToSearchFilm
-
-//    private val database = getDatabase(application)
-//    private val movieRepository = MovieRepository(database)
-//
-//    val movies = movieRepository.movies
     init {
         getTrendingMoviesToday()
     }
@@ -57,11 +49,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-//    private fun getTrendingMoviesToday() {
-//        coroutineScope.launch {
-//            movieRepository.refreshMovies()
-//        }
-//    }
 
     fun displayFilmDetails(movieId: Int) {
         _navigationToSelectFilm.value = movieId
@@ -70,13 +57,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun displayFilmDetailsComplete() {
         _navigationToSelectFilm.value = null
     }
-//    fun displaySearchFilm(query: String?) {
-//        _navigationToSearchFilm.value = query
-//    }
-//
-//    fun displaySearchFilmComplete() {
-//        _navigationToSearchFilm.value = null
-//    }
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
