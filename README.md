@@ -7,6 +7,7 @@ Use components from the Jetpack library: ViewModel, LiveData, DataBinding, Navig
 
 ## Screenshots
 ![image](https://github.com/sondt28/movie-app/assets/89345307/795d2fe2-b44f-4010-bd71-2e9b1263980e)
-![image](https://github.com/sondt28/movie-app/assets/89345307/68860e7f-7e7d-4872-ac53-7d7372e0f60c)
+![image](https://github.com/sondt28/movie-app/assets/89345307/7210269f-f76e-44fa-9278-61e9ce718fc5)
+
 
 
