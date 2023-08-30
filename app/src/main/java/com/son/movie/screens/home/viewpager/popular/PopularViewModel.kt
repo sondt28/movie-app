@@ -23,7 +23,9 @@ class PopularViewModel : ViewModel() {
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>>
         get() = _movies
-
+    private val _navigateToMovieDetails = MutableLiveData<Int?>()
+    val navigateToMovieDetails:LiveData<Int?>
+        get() = _navigateToMovieDetails
     init {
         getUpcomingMovies()
     }
@@ -42,7 +44,13 @@ class PopularViewModel : ViewModel() {
             }
         }
     }
+    fun navigateToMovieDetails(movieId: Int) {
+        _navigateToMovieDetails.value = movieId
+    }
 
+    fun navigateToMovieDetailsComplete() {
+        _navigateToMovieDetails.value = null
+    }
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

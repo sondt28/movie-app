@@ -24,11 +24,10 @@ class NowPlayingViewModel : ViewModel() {
     private val _movies = MutableLiveData<List<Movie>>()
     val movie: LiveData<List<Movie>>
         get() = _movies
+    private val _navigateToMovieDetails = MutableLiveData<Int?>()
+    val navigateToMovieDetails:LiveData<Int?>
+        get() = _navigateToMovieDetails
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
 
     init {
         getNowPlayingMovies()
@@ -47,5 +46,16 @@ class NowPlayingViewModel : ViewModel() {
                 _status.value = NowPlayingStatus.ERROR
             }
         }
+    }
+    fun navigateToMovieDetails(movieId: Int) {
+        _navigateToMovieDetails.value = movieId
+    }
+
+    fun navigateToMovieDetailsComplete() {
+        _navigateToMovieDetails.value = null
+    }
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

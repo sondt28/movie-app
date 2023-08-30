@@ -13,8 +13,293 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/dark_navy_blue"
         tools:context=".screens.detail.DetailFragment">
 
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintEnd_toStartOf="@+id/tvTitle"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail"
+            android:textColor="@color/light_brownish_green"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBack"
+            app:layout_constraintEnd_toStartOf="@+id/ivBookMark"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivBack"
+            app:layout_constraintTop_toTopOf="@+id/ivBack" />
+
+        <ImageView
+            android:id="@+id/ivBookMark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvTitle"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:srcCompat="@drawable/ic_book_mark" />
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivBackdrop"
+            android:layout_width="match_parent"
+            android:layout_height="212dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            app:riv_corner_radius_bottom_left="16dp"
+            app:riv_corner_radius_bottom_right="16dp"
+            android:scaleType="centerCrop"
+            app:imgUrl="@{viewModel.selectMovie.backdropPath}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivBack"
+            tools:src="@drawable/img_test" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutVote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_vote"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/ivStar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/ic_star"
+                app:layout_constraintStart_toStartOf="@id/constraintLayoutVote"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayoutVote" />
+
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:textColor="#FF8700"
+                app:layout_constraintBottom_toBottomOf="@id/constraintLayoutVote"
+                app:layout_constraintEnd_toEndOf="@id/constraintLayoutVote"
+                app:layout_constraintStart_toEndOf="@+id/ivStar"
+                app:layout_constraintTop_toTopOf="@id/constraintLayoutVote"
+                app:voteScoreFormat="@{viewModel.selectMovie.voteAverage}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="96dp"
+            android:layout_height="120dp"
+            android:adjustViewBounds="true"
+            app:riv_corner_radius="16dp"
+            android:background="@drawable/bg_poster_path"
+            android:scaleType="centerCrop"
+            app:imgUrl="@{viewModel.selectMovie.posterPath}"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
+            tools:src="@drawable/img_test" />
+
+        <TextView
+            android:id="@+id/tvTitleMovie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@{viewModel.selectMovie.title}"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintStart_toEndOf="@+id/ivPoster"
+            app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
+            tools:text="Spider man No Way Home" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_large" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGuideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacing_large" />
+
+        <TextView
+            android:id="@+id/tvRelease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_slate_gray"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvRuntime"
+            app:layout_constraintEnd_toStartOf="@+id/vLineOne"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivCalendar"
+            app:releaseFormat="@{viewModel.selectMovie.releaseDate}"
+            tools:text="2021" />
+
+        <TextView
+            android:id="@+id/tvRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/dark_slate_gray"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/vLine_two"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivClock"
+            app:layout_constraintTop_toBottomOf="@+id/ivPoster"
+            app:runtimeFormat="@{viewModel.selectMovie.runtime}"
+            tools:text="148 Minutes" />
+
+        <TextView
+            android:id="@+id/tvGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.selectMovie.genres.get(0).name}"
+            android:textColor="@color/dark_slate_gray"
+            android:textSize="12sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvRuntime"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivTicket"
+            tools:text="Action" />
+
+        <ImageView
+            android:id="@+id/ivCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRelease"
+            app:layout_constraintEnd_toStartOf="@+id/tvRelease"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:layout_constraintTop_toTopOf="@+id/tvRelease"
+            app:srcCompat="@drawable/ic_calendar" />
+
+        <ImageView
+            android:id="@+id/ivClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRuntime"
+            app:layout_constraintEnd_toStartOf="@+id/tvRuntime"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/vLineOne"
+            app:layout_constraintTop_toTopOf="@+id/tvRuntime"
+            app:srcCompat="@drawable/ic_clock" />
+
+        <ImageView
+            android:id="@+id/ivTicket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvGenre"
+            app:layout_constraintEnd_toStartOf="@+id/tvGenre"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/vLine_two"
+            app:layout_constraintTop_toTopOf="@+id/tvGenre"
+            app:srcCompat="@drawable/ic_ticket" />
+
+        <View
+            android:id="@+id/vLine_two"
+            android:layout_width="1dp"
+            android:layout_height="16dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/slate_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRuntime"
+            app:layout_constraintEnd_toStartOf="@+id/ivTicket"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvRuntime"
+            app:layout_constraintTop_toTopOf="@+id/tvRuntime" />
+
+        <View
+            android:id="@+id/vLineOne"
+            android:layout_width="1dp"
+            android:layout_height="16dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/slate_gray"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRelease"
+            app:layout_constraintEnd_toStartOf="@+id/ivClock"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tvRelease"
+            app:layout_constraintTop_toTopOf="@+id/tvRelease" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_navy_blue"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintStart_toEndOf="@id/leftGuideLine"
+            app:layout_constraintTop_toBottomOf="@id/topGuideLine"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/charcoal_gray"
+            app:tabMode="scrollable"
+            app:tabTextColor="@color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/about_movie" />
+
+            <com.google.android.material.tabs.TabItem
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reviews" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cast" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="412dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

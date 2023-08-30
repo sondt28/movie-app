@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.son.movie.databinding.ItemMovieTypeBinding
 import com.son.movie.model.Movie
 
-class MovieItemTypeAdapter :
+class MovieItemTypeAdapter(private val onClickItem: OnclickItem) :
     ListAdapter<Movie, MovieItemTypeAdapter.MovieItemTypeViewHolder>(MovieItemTypeDiffCallback) {
 
     inner class MovieItemTypeViewHolder(val binding: ItemMovieTypeBinding) :
@@ -36,9 +36,9 @@ class MovieItemTypeAdapter :
 
     override fun onBindViewHolder(holder: MovieItemTypeViewHolder, position: Int) {
         val movie = getItem(position)
-//        holder.itemView.setOnClickListener {
-//            onClickItem.onClick(movie)
-//        }
+        holder.itemView.setOnClickListener {
+            onClickItem.onClick(movie)
+        }
         holder.bind(movie)
     }
 

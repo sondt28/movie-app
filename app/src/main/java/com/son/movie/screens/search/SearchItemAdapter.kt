@@ -17,7 +17,6 @@ class SearchItemAdapter(private val onClickItem: OnClickListener) :
             binding.movie = item
             binding.executePendingBindings()
         }
-
     }
 
     companion object SearchDiffCallback : DiffUtil.ItemCallback<Movie>() {

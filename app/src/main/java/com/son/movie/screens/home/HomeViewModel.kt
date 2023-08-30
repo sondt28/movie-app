@@ -32,7 +32,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         getTrendingMoviesToday()
     }
 
-        private fun getTrendingMoviesToday() {
+    private fun getTrendingMoviesToday() {
         coroutineScope.launch {
             Dispatchers.IO
             val moviesDeferred = MovieApi.retrofitService.getTrendingMoviesTodayAsync()
@@ -57,6 +57,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun displayFilmDetailsComplete() {
         _navigationToSelectFilm.value = null
     }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()

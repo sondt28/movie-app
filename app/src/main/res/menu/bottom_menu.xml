@@ -10,8 +10,8 @@
         android:title="@string/search"/>
 
     <item
-        android:id="@+id/moreFragment"
+        android:id="@+id/watchListFragment"
         android:icon="@drawable/ic_save"
-        android:title="@string/more" />
+        android:title="@string/watch_list" />
 
 </menu>

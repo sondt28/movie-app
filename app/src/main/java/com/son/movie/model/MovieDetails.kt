@@ -1,7 +1,10 @@
 package com.son.movie.model
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MovieDetails(
     val id: Int,
     val title: String,
@@ -13,4 +16,7 @@ data class MovieDetails(
     @Json(name = "release_date")
     val releaseDate: String,
     val runtime: Int,
-)
+    val genres: List<Genre>,
+    @Json(name = "vote_average")
+    val voteAverage: Float
+) : Parcelable

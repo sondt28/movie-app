@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.son.movie.R
 import com.son.movie.databinding.FragmentHomeBinding
+import com.son.movie.screens.home.viewpager.DemoMovieAdapter
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -31,14 +32,17 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.rvTrendingMoviesToday.adapter = MovieItemAdapter(MovieItemAdapter.OnclickListener {
-            viewModel.displayFilmDetails(it.id)
-        })
-
+        setupTrendingMoviesTodayRecyclerView()
         setupTagLayout()
         handleObserver()
 
         return binding.root
+    }
+
+    private fun setupTrendingMoviesTodayRecyclerView() {
+        binding.rvTrendingMoviesToday.adapter = MovieItemAdapter(MovieItemAdapter.OnclickListener {
+            viewModel.displayFilmDetails(it.id)
+        })
     }
 
     private fun handleObserver() {

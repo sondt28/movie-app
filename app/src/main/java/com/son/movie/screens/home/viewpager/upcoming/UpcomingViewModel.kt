@@ -3,6 +3,7 @@ package com.son.movie.screens.home.viewpager.upcoming
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide.init
 import com.son.movie.model.Movie
 import com.son.movie.network.MovieApi
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +25,11 @@ class UpcomingViewModel : ViewModel() {
     val movies: LiveData<List<Movie>>
         get() = _movies
 
+    private val _navigateToMovieDetails = MutableLiveData<Int?>()
+    val navigateToMovieDetails:LiveData<Int?>
+        get() = _navigateToMovieDetails
+
+
     init {
         getUpcomingMovies()
     }
@@ -41,6 +47,14 @@ class UpcomingViewModel : ViewModel() {
                 _status.value = UpcomingStatus.ERROR
             }
         }
+    }
+
+    fun navigateToMovieDetails(movieId: Int) {
+        _navigateToMovieDetails.value = movieId
+    }
+
+    fun navigateToMovieDetailsComplete() {
+        _navigateToMovieDetails.value = null
     }
 
     override fun onCleared() {

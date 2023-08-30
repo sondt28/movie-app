@@ -9,16 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.makeramen.roundedimageview.RoundedImageView
 import com.son.movie.R
 import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.screens.home.MovieItemAdapter
 import com.son.movie.screens.home.MovieItemTypeAdapter
 import com.son.movie.screens.search.SearchItemAdapter
-import com.son.movie.screens.search.SearchResultStatus
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
@@ -43,21 +41,22 @@ fun bindSearchRecyclerView(recyclerView: RecyclerView, data: Movies?) {
 //    }
 //}
 
-@BindingAdapter("videoPath")
-fun bindVideoId(youtubePlayerView: YouTubePlayerView, videoId: String?) {
-    videoId?.let {
-        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(videoId, 0F)
-            }
-        })
-    }
-}
-
 @BindingAdapter("runtimeFormat")
 fun bindRuntimeFormat(textView: TextView, runtime: Int?) {
     runtime?.let {
         textView.text = convertRuntimeToFormatted(runtime, textView.context.resources)
+    }
+}
+@BindingAdapter("releaseFormat")
+fun bindReleaseFormat(textView: TextView, release: String?) {
+    release?.let {
+        textView.text = convertReleaseToFormatted(release)
+    }
+}
+@BindingAdapter("voteScoreFormat")
+fun bindVoteScoreFormat(textView: TextView, voteScore: Float?) {
+    voteScore?.let {
+        textView.text = convertVoteScoreFormatted(voteScore)
     }
 }
 
@@ -75,10 +74,10 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
         Glide.with(imgView.context).load(imgUri).apply(
             RequestOptions().placeholder(R.drawable.loading_animation)
                 .error(R.drawable.ic_broken_image)
-
         ).into(imgView)
     }
 }
+
 @BindingAdapter("shimmer")
 fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: MovieStatus?) {
     when (status) {

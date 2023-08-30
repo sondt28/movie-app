@@ -13,15 +13,8 @@
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+
     </fragment>
-    <fragment
-        android:id="@+id/moreFragment"
-        android:name="com.son.movie.screens.more.MoreFragment"
-        android:label="More"
-        tools:layout="@layout/fragment_more" />
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.son.movie.screens.detail.DetailFragment"
@@ -46,4 +39,33 @@
             android:id="@+id/action_searchFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nowPlayingFragment"
+        android:name="com.son.movie.screens.home.viewpager.nowplaying.NowPlayingFragment"
+        android:label="NowPlayingFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/popularFragment"
+        android:name="com.son.movie.screens.home.viewpager.popular.PopularFragment"
+        android:label="PopularFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/overviewFragment"
+        android:name="com.son.movie.screens.detail.viewpager.overview.OverviewFragment"
+        android:label="OverviewFragment" />
+    <fragment
+        android:id="@+id/topRatedFragment"
+        android:name="com.son.movie.screens.home.viewpager.toprated.TopRatedFragment"
+        android:label="TopRatedFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/upcomingFragment"
+        android:name="com.son.movie.screens.home.viewpager.upcoming.UpcomingFragment"
+        android:label="UpcomingFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/watchListFragment"
+        android:name="com.son.movie.screens.watchlist.WatchListFragment"
+        android:label="fragment_watch_list"
+        tools:layout="@layout/fragment_watch_list" />
 </navigation>

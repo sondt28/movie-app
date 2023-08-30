@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <string name="app_name">Movie</string>-->
+<!--    <string name="hello_blank_fragment">Xin chào fragment trống</string>-->
+<!--    <string name="home">Trang chủ</string>-->
+<!--    <string name="more">Thêm</string>-->
+<!--    <string name="trending_today">Xu hướng Hôm nay</string>-->
+<!--    <string name="runtime">%d Phút</string>-->
+<!--    <string name="youtube_id">%s</string>-->
+<!--    <string name="search">Tìm kiếm</string>-->
+<!--    <string name="no_results_found">Không tìm thấy kết quả.</string>-->
+<!--    <string name="what_do_you_want_to_watch">Bạn muốn xem gì?</string>-->
+<!--    <string name="popular">Phổ biến</string>-->
+<!--    <string name="top_rated">Được đánh giá cao</string>-->
+<!--    <string name="upcoming">Sắp tới</string>-->
+<!--    <string name="now_playing">Đang chiếu</string>-->
+<!--    <string name="detail">Chi tiết</string>-->
+</resources>
