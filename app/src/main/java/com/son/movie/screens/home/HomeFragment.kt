@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.son.movie.R
 import com.son.movie.databinding.FragmentHomeBinding
+import com.son.movie.screens.home.HomeFragmentDirections
 import com.son.movie.screens.home.viewpager.DemoMovieAdapter
 
 class HomeFragment : Fragment() {
@@ -18,9 +19,7 @@ class HomeFragment : Fragment() {
     private lateinit var demoMovieAdapter: DemoMovieAdapter
 
     private val viewModel: HomeViewModel by lazy {
-        val activity = requireNotNull(activity).application
-        val homeViewModelFactory = HomeViewModelFactory(activity)
-        ViewModelProvider(this, homeViewModelFactory)[HomeViewModel::class.java]
+        ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     override fun onCreateView(

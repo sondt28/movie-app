@@ -10,15 +10,31 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.makeramen.roundedimageview.RoundedImageView
 import com.son.movie.R
 import com.son.movie.model.Movie
 import com.son.movie.model.Movies
+import com.son.movie.screens.detail.BookmarkStatus
+import com.son.movie.screens.detail.DetailViewModel
 import com.son.movie.screens.home.MovieItemAdapter
 import com.son.movie.screens.home.MovieItemTypeAdapter
 import com.son.movie.screens.search.SearchItemAdapter
+import com.son.movie.screens.watchlist.WatchlistItemAdapter
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
+@BindingAdapter("listWatchlist")
+fun bindWatchlistRecyclerView(recyclerView: RecyclerView, data: Movies?) {
+    val adapter = recyclerView.adapter as WatchlistItemAdapter
+    adapter.submitList(data?.results)
+}
+
+@BindingAdapter("checkBookmark")
+fun bindCheckBookmark(imgView: ImageView, isBookmarked: Boolean) {
+    if (isBookmarked) imgView.setImageResource(R.drawable.ic_book_mark_selected)
+    else imgView.setImageResource(R.drawable.ic_book_mark)
+}
 
 @BindingAdapter("listTypeMovies")
 fun bindNowPlayingRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
@@ -32,14 +48,27 @@ fun bindSearchRecyclerView(recyclerView: RecyclerView, data: Movies?) {
     adapter.submitList(data?.results)
 }
 
-//@BindingAdapter("checkResult")
-//fun checkSearchResult(textView: TextView, searchResult: Movies?) {
-//    if (searchResult?.results.isNullOrEmpty()) {
-//        textView.text = R.string.no_results_found.toString()
-//    } else {
-//        textView.text = ""
-//    }
-//}
+@BindingAdapter("checkBookmarkStatus")
+fun checkSearchResult(imgView: ImageView, bookmarkStatus: BookmarkStatus?) {
+    when (bookmarkStatus) {
+        BookmarkStatus.LOADING -> {
+            imgView.visibility = View.VISIBLE
+            imgView.setImageResource(R.drawable.loading_animation)
+        }
+
+        BookmarkStatus.DONE -> {
+            imgView.visibility = View.GONE
+        }
+
+        BookmarkStatus.ERROR -> {
+            imgView.visibility = View.GONE
+        }
+
+        else -> {
+            imgView.visibility = View.GONE
+        }
+    }
+}
 
 @BindingAdapter("runtimeFormat")
 fun bindRuntimeFormat(textView: TextView, runtime: Int?) {
@@ -47,12 +76,14 @@ fun bindRuntimeFormat(textView: TextView, runtime: Int?) {
         textView.text = convertRuntimeToFormatted(runtime, textView.context.resources)
     }
 }
+
 @BindingAdapter("releaseFormat")
 fun bindReleaseFormat(textView: TextView, release: String?) {
     release?.let {
         textView.text = convertReleaseToFormatted(release)
     }
 }
+
 @BindingAdapter("voteScoreFormat")
 fun bindVoteScoreFormat(textView: TextView, voteScore: Float?) {
     voteScore?.let {
@@ -84,12 +115,15 @@ fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: MovieStatus?) 
         MovieStatus.ERROR -> {
 
         }
+
         MovieStatus.DONE -> {
             shimmerFrameLayout.visibility = View.GONE
         }
+
         MovieStatus.LOADING -> {
             shimmerFrameLayout.visibility = View.VISIBLE
         }
+
         else -> {
             shimmerFrameLayout.visibility = View.VISIBLE
         }

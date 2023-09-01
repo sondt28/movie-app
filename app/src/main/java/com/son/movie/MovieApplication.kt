@@ -1,28 +1,17 @@
 package com.son.movie
 
-//import android.app.Application
-//import android.os.Build
-//import androidx.work.Constraints
-//import androidx.work.ExistingPeriodicWorkPolicy
-//import androidx.work.NetworkType
-//import androidx.work.PeriodicWorkRequestBuilder
-//import androidx.work.WorkManager
-//import com.son.movie.work.RefreshDataWorker
-//import kotlinx.coroutines.CoroutineScope
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.launch
-//import timber.log.Timber
-//import java.util.concurrent.TimeUnit
-//
-//class MovieApplication : Application() {
+import android.app.Application
+import timber.log.Timber
+
+class MovieApplication : Application() {
 //    private val applicationScope = CoroutineScope(Dispatchers.Default)
-//
-//    override fun onCreate() {
-//        super.onCreate()
-//        Timber.plant(Timber.DebugTree())
+
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(Timber.DebugTree())
 //        delayedInit()
-//    }
-//
+    }
+
 //    private fun delayedInit() {
 //        applicationScope.launch {
 //            setupRecurringWork()
@@ -48,4 +37,4 @@ package com.son.movie
 //            repeatingRequest
 //        )
 //    }
-//}
+}

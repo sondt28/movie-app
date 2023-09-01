@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.son.movie.R
 import com.son.movie.databinding.FragmentDetailBinding
@@ -35,8 +35,24 @@ class DetailFragment : Fragment() {
 
         setupTabLayout()
         setupListener()
+        setObserver()
 
         return binding.root
+    }
+
+    private fun setObserver() {
+        viewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                viewModel.isBookmarked.observe(viewLifecycleOwner, Observer {
+                    if (it) {
+                        Snackbar.make(requireView(), "Bookmarked successfully!", Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        Snackbar.make(requireView(), "Removed bookmark successfully!", Snackbar.LENGTH_SHORT).show()
+                    }
+                    viewModel.setSnackbarVisibility(false)
+                })
+            }
+        })
     }
 
     private fun setupListener() {
@@ -46,7 +62,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun setupTabLayout() {
-        viewModel.selectMovie.observe(viewLifecycleOwner, Observer {
+        viewModel.movie.observe(viewLifecycleOwner, Observer {
             demoMovieDetailAdapter = DemoMovieDetailAdapter(this, it.overview)
             binding.pager.adapter = demoMovieDetailAdapter
 
@@ -56,7 +72,6 @@ class DetailFragment : Fragment() {
                     1 -> tab.text = getString(R.string.reviews)
                     2 -> tab.text = getString(R.string.cast)
                 }
-
             }.attach()
         })
     }

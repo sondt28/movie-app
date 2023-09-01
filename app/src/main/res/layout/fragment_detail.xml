@@ -47,13 +47,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="6dp"
+            android:onClick="@{() -> viewModel.bookmark()}"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvTitle"
             app:layout_constraintTop_toTopOf="@+id/tvTitle"
-            app:srcCompat="@drawable/ic_book_mark" />
+            app:checkBookmark="@{viewModel.isBookmarked}" />
 
+        <ImageView
+            android:id="@+id/ivBookmarkStatus"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:paddingVertical="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toTopOf="@+id/tvTitle"
+            app:checkBookmarkStatus="@{viewModel.bookmarkStatus}"/>
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ivBackdrop"
@@ -64,7 +75,7 @@
             app:riv_corner_radius_bottom_left="16dp"
             app:riv_corner_radius_bottom_right="16dp"
             android:scaleType="centerCrop"
-            app:imgUrl="@{viewModel.selectMovie.backdropPath}"
+            app:imgUrl="@{viewModel.movie.backdropPath}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +114,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraintLayoutVote"
                 app:layout_constraintStart_toEndOf="@+id/ivStar"
                 app:layout_constraintTop_toTopOf="@id/constraintLayoutVote"
-                app:voteScoreFormat="@{viewModel.selectMovie.voteAverage}" />
+                app:voteScoreFormat="@{viewModel.movie.voteAverage}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,7 +126,7 @@
             app:riv_corner_radius="16dp"
             android:background="@drawable/bg_poster_path"
             android:scaleType="centerCrop"
-            app:imgUrl="@{viewModel.selectMovie.posterPath}"
+            app:imgUrl="@{viewModel.movie.posterPath}"
             app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
@@ -127,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:text="@{viewModel.selectMovie.title}"
+            android:text="@{viewModel.movie.title}"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -160,7 +171,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vLineOne"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ivCalendar"
-            app:releaseFormat="@{viewModel.selectMovie.releaseDate}"
+            app:releaseFormat="@{viewModel.movie.releaseDate}"
             tools:text="2021" />
 
         <TextView
@@ -174,14 +185,14 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ivClock"
             app:layout_constraintTop_toBottomOf="@+id/ivPoster"
-            app:runtimeFormat="@{viewModel.selectMovie.runtime}"
+            app:runtimeFormat="@{viewModel.movie.runtime}"
             tools:text="148 Minutes" />
 
         <TextView
             android:id="@+id/tvGenre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.selectMovie.genres.get(0).name}"
+            android:text="@{viewModel.movie.genres.get(0).name}"
             android:textColor="@color/dark_slate_gray"
             android:textSize="12sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvRuntime"
