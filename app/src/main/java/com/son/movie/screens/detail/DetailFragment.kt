@@ -1,5 +1,7 @@
 package com.son.movie.screens.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import com.son.movie.R
 import com.son.movie.databinding.FragmentDetailBinding
 import com.son.movie.screens.detail.viewpager.DemoMovieDetailAdapter
 
+private const val YOUTUBE_URL = "https://www.youtube.com/watch?v="
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private lateinit var demoMovieDetailAdapter: DemoMovieDetailAdapter
@@ -45,12 +48,24 @@ class DetailFragment : Fragment() {
             if (it) {
                 viewModel.isBookmarked.observe(viewLifecycleOwner, Observer {
                     if (it) {
-                        Snackbar.make(requireView(), "Bookmarked successfully!", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), getString(R.string.bookmarked_success), Snackbar.LENGTH_SHORT).show()
                     } else {
-                        Snackbar.make(requireView(), "Removed bookmark successfully!", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), getString(R.string.removed_bookmark_success), Snackbar.LENGTH_SHORT).show()
                     }
                     viewModel.setSnackbarVisibility(false)
                 })
+            }
+        })
+
+        viewModel.navigateToYoutube.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val youtubeLink = YOUTUBE_URL + it
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(youtubeLink)
+                startActivity(intent)
+                viewModel.navigateToYoutubeCompleted()
+            } ?: run {
+                Snackbar.make(requireView(), getString(R.string.trailer_not_found), Snackbar.LENGTH_SHORT).show()
             }
         })
     }

@@ -31,11 +31,7 @@ class WatchlistViewModel : ViewModel() {
     val navigateToMovieDetail: LiveData<Int?>
         get() = _navigateToMovieDetail
 
-    init {
-        getOwnWatchlist()
-    }
-
-    private fun getOwnWatchlist() {
+     fun getOwnWatchlist() {
         Timber.i("getOwnWatchlist() Called")
         coroutineScope.launch {
             _status.value = WatchListStatsus.LOADING

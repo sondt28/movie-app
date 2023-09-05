@@ -4,7 +4,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.son.movie.model.BookmarkRequest
 import com.son.movie.model.BookmarkResponse
 import com.son.movie.model.Movie
-import com.son.movie.model.ResultMovieVideo
+import com.son.movie.model.Trailers
 import com.son.movie.model.Movies
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -46,7 +46,7 @@ interface MovieApiService {
     fun getTrailerMovieAsync(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String = API_KEY
-    ): Deferred<ResultMovieVideo>
+    ): Deferred<Trailers>
 
     @GET("search/movie")
     fun getResultSearchAsync(

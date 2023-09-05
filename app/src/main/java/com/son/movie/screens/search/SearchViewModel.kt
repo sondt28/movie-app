@@ -30,7 +30,6 @@ class SearchViewModel : ViewModel() {
 
     fun getSearchResult(query: String) {
         coroutineScope.launch {
-            Dispatchers.IO
             _status.value = SearchResultStatus.LOADING
             try {
                 val searchResultDeferred = MovieApi.retrofitService.getResultSearchAsync(query)

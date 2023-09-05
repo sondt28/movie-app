@@ -20,56 +20,42 @@
             android:id="@+id/tvQuestion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/poppins"
-            android:text="@string/what_do_you_want_to_watch"
+            android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:textSize="24sp"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintStart_toEndOf="@id/leftGuideLine"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
-            android:layout_height="42dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/bg_search"
-            android:drawableEnd="@drawable/ic_search_two"
-            android:gravity="center_vertical"
-            android:hint="@string/search"
-            android:paddingStart="24dp"
-            android:paddingEnd="14dp"
-            android:textColor="@color/slate_gray"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
-            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
-            app:layout_constraintTop_toBottomOf="@id/tvQuestion" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTrendingMoviesToday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:clipToPadding="false"
+            android:layout_marginTop="32dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/leftGuideLine"
-            app:layout_constraintTop_toBottomOf="@id/etSearch"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestion"
             app:listData="@{viewModel.trendingMovieDay}"
             tools:itemCount="16"
             tools:listitem="@layout/item_movie" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFrameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:clipToPadding="false"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/leftGuideLine"
-            app:layout_constraintTop_toBottomOf="@id/etSearch"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestion"
             app:shimmer="@{viewModel.status}">
 
             <LinearLayout
@@ -149,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="345dp" />
+            app:layout_constraintGuide_begin="328dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

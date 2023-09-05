@@ -2,12 +2,12 @@ package com.son.movie.model
 
 import com.squareup.moshi.Json
 
-data class MovieTrailer(
+data class Trailer(
     val type: String,
     val key: String
 )
 
-data class ResultMovieVideo(
+data class Trailers(
     @Json(name = "results")
-    val resultVideoMovie: List<MovieTrailer>
+    val resultVideoMovie: List<Trailer>
 )

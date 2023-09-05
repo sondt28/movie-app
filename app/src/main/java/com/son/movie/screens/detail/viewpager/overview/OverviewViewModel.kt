@@ -5,10 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-class OverviewViewModel(private val overview: String, val app: Application) : AndroidViewModel(app) {
+class OverviewViewModel(overview: String, val app: Application) : AndroidViewModel(app) {
 
     private val _overviewMovie = MutableLiveData(overview)
-    val overviewMoview: LiveData<String>
+    val overviewMovie: LiveData<String>
         get() = _overviewMovie
 
 }

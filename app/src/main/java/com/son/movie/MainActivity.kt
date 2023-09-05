@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.i("onCreate Called")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val navHostFragment =
@@ -32,39 +31,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.detailFragment) {
                 binding.bottomNavigationView.visibility = View.GONE
+                binding.vLine.visibility = View.GONE
             } else {
                 binding.bottomNavigationView.visibility = View.VISIBLE
+                binding.vLine.visibility = View.VISIBLE
             }
         }
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Timber.i("onRestart Called")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Timber.i("onStart Called")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Timber.i("onStop Called")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Timber.i("onResume Called")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Timber.i("onPause Called")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.i("onDestroy Called")
     }
 }

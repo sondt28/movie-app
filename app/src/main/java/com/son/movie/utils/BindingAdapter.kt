@@ -9,20 +9,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
-import com.makeramen.roundedimageview.RoundedImageView
 import com.son.movie.R
+import com.son.movie.model.Genre
 import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.screens.detail.BookmarkStatus
-import com.son.movie.screens.detail.DetailViewModel
 import com.son.movie.screens.home.MovieItemAdapter
 import com.son.movie.screens.home.MovieItemTypeAdapter
 import com.son.movie.screens.search.SearchItemAdapter
 import com.son.movie.screens.watchlist.WatchlistItemAdapter
 
 const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
+@BindingAdapter("genresName")
+fun bindGenresName(textView: TextView, genres: List<Genre>?) {
+    if (genres?.isNotEmpty() == true) {
+        textView.text = genres[0].name
+    } else {
+        textView.text = textView.context.getString(R.string.no_genre)
+    }
+}
 
 @BindingAdapter("listWatchlist")
 fun bindWatchlistRecyclerView(recyclerView: RecyclerView, data: Movies?) {

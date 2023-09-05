@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.son.movie.databinding.ItemSearchBinding
+import com.son.movie.databinding.ItemWatchlistBinding
 import com.son.movie.model.Movie
 
 class SearchItemAdapter(private val onClickItem: OnClickListener) :
     ListAdapter<Movie, SearchItemAdapter.SearchItemViewHolder>(SearchDiffCallback) {
 
-    inner class SearchItemViewHolder(private val binding: ItemSearchBinding) :
+    inner class SearchItemViewHolder(private val binding: ItemWatchlistBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie) {
             binding.movie = item
@@ -30,7 +30,7 @@ class SearchItemAdapter(private val onClickItem: OnClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
-        return SearchItemViewHolder(ItemSearchBinding.inflate(LayoutInflater.from(parent.context)))
+        return SearchItemViewHolder(ItemWatchlistBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {

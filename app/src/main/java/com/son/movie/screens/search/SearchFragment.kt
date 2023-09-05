@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -50,29 +51,18 @@ class SearchFragment : Fragment() {
     }
 
     private fun handleSearch() {
-//        val menuHost: MenuHost = requireActivity()
-//
-//        menuHost.addMenuProvider(object : MenuProvider {
-//            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                menuInflater.inflate(R.menu.toolbar_menu, menu)
-//                val searchMovie = menu.findItem(R.id.actionSearch)
-//                val searchView = searchMovie.actionView as SearchView
-//                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//                    override fun onQueryTextSubmit(query: String?): Boolean {
-//                        query?.let { viewModel.getSearchResult(it) }
-//                        return true
-//                    }
-//                    override fun onQueryTextChange(newText: String?): Boolean {
-//                        newText?.let { viewModel.getSearchResult(it) }
-//                        return true
-//                    }
-//                })
-//            }
-//
-//            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//
-//                return true
-//            }
-//        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.getSearchResult(it)
+                }
+                return true
+            }
+        })
     }
 }

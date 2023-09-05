@@ -4,22 +4,19 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.son.movie.model.BookmarkRequest
 import com.son.movie.model.Movie
-import com.son.movie.network.ACCOUNT_ID
-import com.son.movie.network.API_KEY
+import com.son.movie.model.Trailer
+import com.son.movie.model.Trailers
 import com.son.movie.network.MovieApi
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 enum class MovieDetailsStatus { LOADING, ERROR, DONE }
 enum class BookmarkStatus { LOADING, ERROR, DONE }
 class DetailViewModel(val movieId: Int, application: Application) : AndroidViewModel(application) {
-    private val viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     private val _status = MutableLiveData<MovieDetailsStatus>()
     val status: LiveData<MovieDetailsStatus>
         get() = _status
@@ -36,25 +33,25 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
     val movie: LiveData<Movie>
         get() = _movie
 
-//    private val _movieTrailer = MutableLiveData<MovieTrailer?>()
-//    val movieTrailer: LiveData<MovieTrailer?>
-//        get() = _movieTrailer
+    private val _navigateToYoutube = MutableLiveData<String?>()
+    val navigateToYoutube: LiveData<String?>
+        get() = _navigateToYoutube
 
     private val _showSnackbar = MutableLiveData<Boolean>(false)
     val showSnackbar: LiveData<Boolean>
         get() = _showSnackbar
+
     init {
-        getMovieDetails()
-        checkBookmark()
+        onMovieDetails()
+        onBookmark()
     }
 
-    private fun getMovieDetails() {
-        coroutineScope.launch {
-            Dispatchers.IO
-            val movieDetailDeferred = MovieApi.retrofitService.getMovieDetailsAsync(movieId)
+    private fun onMovieDetails() {
+        viewModelScope.launch {
             _status.value = MovieDetailsStatus.LOADING
             try {
-                _movie.value = movieDetailDeferred.await()
+                val movie = fetchMovieDetails(movieId)
+                _movie.value = movie
                 _status.value = MovieDetailsStatus.DONE
             } catch (t: Throwable) {
                 t.printStackTrace()
@@ -63,26 +60,37 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
         }
     }
 
-    private fun checkBookmark() {
-        coroutineScope.launch {
+    private suspend fun fetchMovieDetails(movieId: Int): Movie {
+        return withContext(Dispatchers.IO) {
+            val movieDetailDeferred = MovieApi.retrofitService.getMovieDetailsAsync(movieId)
+            movieDetailDeferred.await()
+        }
+    }
+
+    private fun onBookmark() {
+        viewModelScope.launch {
             try {
-                val watchlistDeferred = MovieApi.retrofitService.getWatchlistMoviesAsync().await()
-                _isBookmarked.value = watchlistDeferred.results.any { movie -> movie.id == movieId }
+                _isBookmarked.value = checkBookmark()
             } catch (t: Throwable) {
                 t.printStackTrace()
             }
         }
     }
 
-     fun bookmark() {
-        coroutineScope.launch {
+    private suspend fun checkBookmark(): Boolean {
+        return withContext(Dispatchers.IO) {
+            val isBookmark = MovieApi.retrofitService.getWatchlistMoviesAsync().await()
+            isBookmark.results.any { movie -> movie.id == movieId }
+        }
+    }
+
+    fun bookmark() {
+        viewModelScope.launch {
             _bookmarkStatus.value = BookmarkStatus.LOADING
             try {
                 val isBookmarked = _isBookmarked.value ?: false
-                val bookmarkRequest = BookmarkRequest(movieId, "movie", !isBookmarked)
-
-                val bookmarkDeferred = MovieApi.retrofitService
-                    .addToWatchlistAsync(ACCOUNT_ID,bookmarkRequest, API_KEY).await()
+                val bookmarkRequest = BookmarkRequest(mediaId = movieId, watchlist = !isBookmarked)
+                MovieApi.retrofitService.addToWatchlistAsync(bookmarkRequest = bookmarkRequest).await()
 
                 _isBookmarked.value = !isBookmarked
                 _showSnackbar.value = true
@@ -94,25 +102,29 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
         }
     }
 
+    fun onTrailer() {
+        viewModelScope.launch {
+            try {
+                val movieTrailer = getTrailer(movieId)
+                _navigateToYoutube.value = movieTrailer?.key
+            } catch (t: Throwable) {
+                t.printStackTrace()
+            }
+        }
+    }
+
+    private suspend fun getTrailer(movieId: Int): Trailer? {
+        return withContext(Dispatchers.IO) {
+            val result = MovieApi.retrofitService.getTrailerMovieAsync(movieId).await()
+            result.resultVideoMovie.find { it.type == "Trailer" }
+        }
+    }
+
     fun setSnackbarVisibility(isShow: Boolean) {
         _showSnackbar.value = isShow
     }
-//    private fun getTrailer() {
-//        coroutineScope.launch {
-//            Dispatchers.IO
-//
-//            try {
-//                val movieTrailerDeferred = MovieApi.retrofitService.getTrailerMovieAsync(movieId)
-//                val result = movieTrailerDeferred.await()
-//                _movieTrailer.value = result.resultVideoMovie.find { it.type == "Trailer" }
-//            } catch (t: Throwable) {
-//                t.printStackTrace()
-//            }
-//        }
-//    }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
+    fun navigateToYoutubeCompleted() {
+        _navigateToYoutube.value = null
     }
 }

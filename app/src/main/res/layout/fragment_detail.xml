@@ -46,25 +46,26 @@
             android:id="@+id/ivBookMark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="6dp"
             android:onClick="@{() -> viewModel.bookmark()}"
+            android:paddingVertical="6dp"
+            app:checkBookmark="@{viewModel.isBookmarked}"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tvTitle"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle"
-            app:checkBookmark="@{viewModel.isBookmarked}" />
+            app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
         <ImageView
             android:id="@+id/ivBookmarkStatus"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingVertical="6dp"
+            android:scaleType="centerCrop"
+            app:checkBookmarkStatus="@{viewModel.bookmarkStatus}"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintTop_toTopOf="@+id/tvTitle"
-            app:checkBookmarkStatus="@{viewModel.bookmarkStatus}"/>
+            app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ivBackdrop"
@@ -72,14 +73,14 @@
             android:layout_height="212dp"
             android:layout_marginTop="16dp"
             android:adjustViewBounds="true"
-            app:riv_corner_radius_bottom_left="16dp"
-            app:riv_corner_radius_bottom_right="16dp"
             android:scaleType="centerCrop"
             app:imgUrl="@{viewModel.movie.backdropPath}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivBack"
+            app:riv_corner_radius_bottom_left="16dp"
+            app:riv_corner_radius_bottom_right="16dp"
             tools:src="@drawable/img_test" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,13 +124,13 @@
             android:layout_width="96dp"
             android:layout_height="120dp"
             android:adjustViewBounds="true"
-            app:riv_corner_radius="16dp"
             android:background="@drawable/bg_poster_path"
             android:scaleType="centerCrop"
             app:imgUrl="@{viewModel.movie.posterPath}"
             app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
+            app:riv_corner_radius="16dp"
             tools:src="@drawable/img_test" />
 
         <TextView
@@ -192,7 +193,7 @@
             android:id="@+id/tvGenre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.movie.genres.get(0).name}"
+            app:genresName="@{viewModel.movie.genres}"
             android:textColor="@color/dark_slate_gray"
             android:textSize="12sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvRuntime"
@@ -312,6 +313,15 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="412dp" />
 
-
+        <ImageView
+            android:onClick="@{() -> viewModel.onTrailer()}"
+            android:id="@+id/ivPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:layout_constraintTop_toTopOf="@+id/ivBackdrop"
+            app:srcCompat="@drawable/ic_play" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

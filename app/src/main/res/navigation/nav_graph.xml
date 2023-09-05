@@ -13,10 +13,8 @@
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:enterAnim="@anim/from_bottom"
+            app:popExitAnim="@anim/to_bottom" />
 
     </fragment>
     <fragment
@@ -27,9 +25,6 @@
         <argument
             android:name="movieId"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_detailFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -41,31 +36,9 @@
             app:argType="string" />
         <action
             android:id="@+id/action_searchFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/nowPlayingFragment"
-        android:name="com.son.movie.screens.home.viewpager.nowplaying.NowPlayingFragment"
-        android:label="NowPlayingFragment" >
-    </fragment>
-    <fragment
-        android:id="@+id/popularFragment"
-        android:name="com.son.movie.screens.home.viewpager.popular.PopularFragment"
-        android:label="PopularFragment" >
-    </fragment>
-    <fragment
-        android:id="@+id/overviewFragment"
-        android:name="com.son.movie.screens.detail.viewpager.overview.OverviewFragment"
-        android:label="OverviewFragment" />
-    <fragment
-        android:id="@+id/topRatedFragment"
-        android:name="com.son.movie.screens.home.viewpager.toprated.TopRatedFragment"
-        android:label="TopRatedFragment" >
-    </fragment>
-    <fragment
-        android:id="@+id/upcomingFragment"
-        android:name="com.son.movie.screens.home.viewpager.upcoming.UpcomingFragment"
-        android:label="UpcomingFragment" >
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_bottom"
+            app:popExitAnim="@anim/to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/watchListFragment"
@@ -74,6 +47,8 @@
         tools:layout="@layout/fragment_watch_list" >
         <action
             android:id="@+id/action_watchListFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_bottom"
+            app:popExitAnim="@anim/to_bottom" />
     </fragment>
 </navigation>
