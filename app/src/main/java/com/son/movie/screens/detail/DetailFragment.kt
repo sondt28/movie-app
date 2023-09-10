@@ -37,7 +37,6 @@ class DetailFragment : Fragment() {
         binding.lifecycleOwner = this
 
         setupTabLayout()
-        setupListener()
         setObserver()
 
         return binding.root
@@ -68,12 +67,13 @@ class DetailFragment : Fragment() {
                 Snackbar.make(requireView(), getString(R.string.trailer_not_found), Snackbar.LENGTH_SHORT).show()
             }
         })
-    }
 
-    private fun setupListener() {
-        binding.ivBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        viewModel.navigateToPreviousDestination.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                findNavController().popBackStack()
+                viewModel.backToPreviousDesCompleted()
+            }
+        })
     }
 
     private fun setupTabLayout() {

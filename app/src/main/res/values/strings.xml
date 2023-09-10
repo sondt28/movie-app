@@ -19,8 +19,8 @@
     <string name="reviews">Reviews</string>
     <string name="cast">Cast</string>
     <string name="watch_list">Watch list</string>
-    <string name="bookmarked_success">Bookmarked successfully!</string>
-    <string name="removed_bookmark_success">Removed bookmark successfully!</string>
+    <string name="bookmarked_success">Bookmarked successfully</string>
+    <string name="removed_bookmark_success">Removed bookmark successfully</string>
     <string name="trailer_not_found">The trailer for the movie could not be found.</string>
     <string name="no_genre">No genre</string>
 </resources>

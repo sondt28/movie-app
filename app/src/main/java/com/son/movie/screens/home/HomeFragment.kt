@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.son.movie.R
 import com.son.movie.databinding.FragmentHomeBinding
-import com.son.movie.screens.home.HomeFragmentDirections
 import com.son.movie.screens.home.viewpager.DemoMovieAdapter
 
 class HomeFragment : Fragment() {
@@ -50,7 +49,7 @@ class HomeFragment : Fragment() {
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
                 findNavController().navigate(action)
 
-                viewModel.displayFilmDetailsComplete()
+                viewModel.displayFilmDetailsCompleted()
             }
         })
     }

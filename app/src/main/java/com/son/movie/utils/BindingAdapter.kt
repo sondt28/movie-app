@@ -16,6 +16,7 @@ import com.son.movie.model.Movies
 import com.son.movie.screens.detail.BookmarkStatus
 import com.son.movie.screens.home.MovieItemAdapter
 import com.son.movie.screens.home.MovieItemTypeAdapter
+import com.son.movie.screens.home.MovieStatus
 import com.son.movie.screens.search.SearchItemAdapter
 import com.son.movie.screens.watchlist.WatchlistItemAdapter
 

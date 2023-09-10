@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_navy_blue"
@@ -20,7 +21,8 @@
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
+            android:onClick="@{() -> viewModel.backToPreviousDes()}"
             android:padding="16dp"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintEnd_toStartOf="@+id/tvTitle"
@@ -193,9 +195,9 @@
             android:id="@+id/tvGenre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:genresName="@{viewModel.movie.genres}"
             android:textColor="@color/dark_slate_gray"
             android:textSize="12sp"
+            app:genresName="@{viewModel.movie.genres}"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvRuntime"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintHorizontal_bias="0.5"
@@ -314,10 +316,10 @@
             app:layout_constraintGuide_begin="412dp" />
 
         <ImageView
-            android:onClick="@{() -> viewModel.onTrailer()}"
             android:id="@+id/ivPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onTrailer()}"
             app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"

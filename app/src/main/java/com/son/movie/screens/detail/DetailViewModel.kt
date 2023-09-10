@@ -37,6 +37,10 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
     val navigateToYoutube: LiveData<String?>
         get() = _navigateToYoutube
 
+    private val _navigateToPreviousDestination = MutableLiveData<Boolean>()
+    val navigateToPreviousDestination: LiveData<Boolean>
+        get() = _navigateToPreviousDestination
+
     private val _showSnackbar = MutableLiveData<Boolean>(false)
     val showSnackbar: LiveData<Boolean>
         get() = _showSnackbar
@@ -90,7 +94,8 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
             try {
                 val isBookmarked = _isBookmarked.value ?: false
                 val bookmarkRequest = BookmarkRequest(mediaId = movieId, watchlist = !isBookmarked)
-                MovieApi.retrofitService.addToWatchlistAsync(bookmarkRequest = bookmarkRequest).await()
+                MovieApi.retrofitService.addToWatchlistAsync(bookmarkRequest = bookmarkRequest)
+                    .await()
 
                 _isBookmarked.value = !isBookmarked
                 _showSnackbar.value = true
@@ -126,5 +131,13 @@ class DetailViewModel(val movieId: Int, application: Application) : AndroidViewM
 
     fun navigateToYoutubeCompleted() {
         _navigateToYoutube.value = null
+    }
+
+    fun backToPreviousDes() {
+        _navigateToPreviousDestination.value = true
+    }
+
+    fun backToPreviousDesCompleted() {
+        _navigateToPreviousDestination.value = false
     }
 }
