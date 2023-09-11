@@ -3,60 +3,47 @@ package com.son.movie.screens.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.son.movie.model.Movie
-import com.son.movie.network.MovieApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.son.movie.model.Movies
+import com.son.movie.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 enum class MovieStatus { LOADING, ERROR, DONE }
-class HomeViewModel : ViewModel() {
-    private val viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
     private val _status = MutableLiveData<MovieStatus>()
-    val status: LiveData<MovieStatus>
-        get() = _status
+    val status: LiveData<MovieStatus> = _status
 
-    private val _trendingMoviesDay = MutableLiveData<List<Movie>>()
-    val trendingMovieDay: LiveData<List<Movie>>
-        get() = _trendingMoviesDay
+    private val _trendingMoviesDay = MutableLiveData<Movies>()
+    val trendingMovieDay: LiveData<Movies> = _trendingMoviesDay
 
     private val _navigationToSelectFilm = MutableLiveData<Int?>()
-    val navigationToSelectFilm: LiveData<Int?>
-        get() = _navigationToSelectFilm
+    val navigationToSelectFilm: LiveData<Int?> = _navigationToSelectFilm
 
     init {
         getTrendingMoviesToday()
     }
 
     private fun getTrendingMoviesToday() {
-        coroutineScope.launch {
-            val moviesDeferred = MovieApi.retrofitService.getTrendingMoviesTodayAsync()
+        viewModelScope.launch {
+            _status.value = MovieStatus.LOADING
             try {
-                _status.value = MovieStatus.LOADING
-                val listResult = moviesDeferred.await()
+                val movies = repository.getTrendingMovieTodayAsync()
+                _trendingMoviesDay.value = movies
                 _status.value = MovieStatus.DONE
-
-                _trendingMoviesDay.value = listResult.results
             } catch (t: Throwable) {
                 t.printStackTrace()
                 _status.value = MovieStatus.ERROR
             }
         }
     }
-
     fun displayFilmDetails(movieId: Int) {
         _navigationToSelectFilm.value = movieId
     }
-
     fun displayFilmDetailsCompleted() {
         _navigationToSelectFilm.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

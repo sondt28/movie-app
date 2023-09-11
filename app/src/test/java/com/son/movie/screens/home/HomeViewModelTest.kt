@@ -14,7 +14,6 @@ class HomeViewModelTest {
 
     @Test
     fun displayFilmDetails_setMovieId() {
-        val homeViewModel = HomeViewModel()
 
     }
 }

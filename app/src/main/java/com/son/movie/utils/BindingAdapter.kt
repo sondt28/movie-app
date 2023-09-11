@@ -44,9 +44,9 @@ fun bindCheckBookmark(imgView: ImageView, isBookmarked: Boolean) {
 }
 
 @BindingAdapter("listTypeMovies")
-fun bindNowPlayingRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
+fun bindNowPlayingRecyclerView(recyclerView: RecyclerView, data: Movies?) {
     val adapter = recyclerView.adapter as MovieItemTypeAdapter
-    adapter.submitList(data)
+    adapter.submitList(data?.results)
 }
 
 @BindingAdapter("listSearch")
@@ -99,9 +99,9 @@ fun bindVoteScoreFormat(textView: TextView, voteScore: Float?) {
 }
 
 @BindingAdapter("listData")
-fun bindRecycleView(recyclerView: RecyclerView, data: List<Movie>?) {
+fun bindRecycleView(recyclerView: RecyclerView, data: Movies?) {
     val adapter = recyclerView.adapter as MovieItemAdapter
-    adapter.submitList(data)
+    adapter.submitList(data?.results)
 }
 
 @BindingAdapter("imgUrl")
@@ -119,21 +119,10 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
 @BindingAdapter("shimmer")
 fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: MovieStatus?) {
     when (status) {
-        MovieStatus.ERROR -> {
+        MovieStatus.DONE -> shimmerFrameLayout.visibility = View.GONE
+        MovieStatus.LOADING -> shimmerFrameLayout.visibility = View.VISIBLE
 
-        }
-
-        MovieStatus.DONE -> {
-            shimmerFrameLayout.visibility = View.GONE
-        }
-
-        MovieStatus.LOADING -> {
-            shimmerFrameLayout.visibility = View.VISIBLE
-        }
-
-        else -> {
-            shimmerFrameLayout.visibility = View.VISIBLE
-        }
+        else -> shimmerFrameLayout.visibility = View.VISIBLE
     }
 }
 

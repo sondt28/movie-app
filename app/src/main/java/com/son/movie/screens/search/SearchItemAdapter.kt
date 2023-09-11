@@ -38,7 +38,6 @@ class SearchItemAdapter(private val onClickItem: OnClickListener) :
         holder.itemView.setOnClickListener {
             onClickItem.onClick(movie)
         }
-
         holder.bind(movie)
     }
 

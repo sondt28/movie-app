@@ -7,32 +7,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.son.movie.R
 import com.son.movie.databinding.FragmentDetailBinding
 import com.son.movie.screens.detail.viewpager.DemoMovieDetailAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 private const val YOUTUBE_URL = "https://www.youtube.com/watch?v="
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
+
     private lateinit var binding: FragmentDetailBinding
     private lateinit var demoMovieDetailAdapter: DemoMovieDetailAdapter
-    private lateinit var viewModel: DetailViewModel
+
+    private val args: DetailFragmentArgs by navArgs()
+    @Inject lateinit var detailViewModelAssistedFactory:DetailViewModel.AssistedFactory
+    private val viewModel: DetailViewModel by viewModels {
+        DetailViewModel.provideFactory(detailViewModelAssistedFactory, args.movieId)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailBinding.inflate(inflater)
-
-        val args = DetailFragmentArgs.fromBundle(requireArguments()).movieId
-
-        val application = requireNotNull(activity).application
-        val viewModelFactory = DetailViewModelFactory(args, application)
-        viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
-
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 

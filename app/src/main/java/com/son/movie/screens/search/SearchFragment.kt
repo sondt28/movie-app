@@ -3,27 +3,20 @@ package com.son.movie.screens.search
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.son.movie.R
 import com.son.movie.databinding.FragmentSearchBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
-    private val viewModel: SearchViewModel by lazy {
-        ViewModelProvider(this)[SearchViewModel::class.java]
-    }
+    private val viewModel: SearchViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,12 +26,14 @@ class SearchFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        initView()
         handleSearch()
+        handleObserver()
 
-        binding.rcSearch.adapter = SearchItemAdapter(SearchItemAdapter.OnClickListener {
-            viewModel.displayDetailsFilm(it.id)
-        })
+        return binding.root
+    }
 
+    private fun handleObserver() {
         viewModel.navigateToMovieDetails.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it)
@@ -46,8 +41,12 @@ class SearchFragment : Fragment() {
                 viewModel.displayDetailsFilmComplete()
             }
         })
+    }
 
-        return binding.root
+    private fun initView() {
+        binding.rcSearch.adapter = SearchItemAdapter(SearchItemAdapter.OnClickListener {
+            viewModel.displayDetailsFilm(it.id)
+        })
     }
 
     private fun handleSearch() {

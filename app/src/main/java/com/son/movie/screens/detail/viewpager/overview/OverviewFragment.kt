@@ -5,13 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.son.movie.R
 import com.son.movie.databinding.FragmentOverviewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class OverviewFragment : Fragment() {
     private lateinit var binding: FragmentOverviewBinding
-    private lateinit var overview: String
+    private lateinit var overviewArgs: String
+    @Inject lateinit var viewModelFactory: OverviewViewModel.AssistedFactory
+
     private lateinit var viewModel: OverviewViewModel
 
     override fun onCreateView(
@@ -19,13 +24,10 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentOverviewBinding.inflate(inflater)
-        arguments?.let {
-            overview = it.getString("overview").toString()
-        }
+        overviewArgs = arguments?.getString("overview").toString()
 
-        val application = requireNotNull(activity).application
-        val viewModelFactory = OverviewViewModelFactory(overview, application)
-        viewModel = ViewModelProvider(this, viewModelFactory)[OverviewViewModel::class.java]
+        viewModel =
+            ViewModelProvider(this, OverviewViewModel.provideFactory(viewModelFactory, overviewArgs))[OverviewViewModel::class.java]
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

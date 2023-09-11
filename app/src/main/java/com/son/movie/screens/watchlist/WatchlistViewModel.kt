@@ -3,45 +3,40 @@ package com.son.movie.screens.watchlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide.init
-import com.son.movie.model.Movie
+import androidx.lifecycle.viewModelScope
 import com.son.movie.model.Movies
-import com.son.movie.network.MovieApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.son.movie.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import javax.inject.Inject
 
-enum class WatchListStatsus { LOADING, ERROR, DONE }
+enum class WatchListStatus { LOADING, ERROR, DONE }
 
-class WatchlistViewModel : ViewModel() {
-    private val viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+@HiltViewModel
+class WatchlistViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
-    private val _status = MutableLiveData<WatchListStatsus>()
-    val status: LiveData<WatchListStatsus>
-        get() = _status
+    private val _status = MutableLiveData<WatchListStatus>()
+    val status: LiveData<WatchListStatus> = _status
 
     private val _movies = MutableLiveData<Movies>()
-    val movies: LiveData<Movies>
-        get() = _movies
+    val movies: LiveData<Movies> = _movies
 
     private val _navigateToMovieDetail = MutableLiveData<Int?>()
-    val navigateToMovieDetail: LiveData<Int?>
-        get() = _navigateToMovieDetail
+    val navigateToMovieDetail: LiveData<Int?> = _navigateToMovieDetail
+
+    init {
+        getOwnWatchlist()
+    }
 
      fun getOwnWatchlist() {
-        Timber.i("getOwnWatchlist() Called")
-        coroutineScope.launch {
-            _status.value = WatchListStatsus.LOADING
+        viewModelScope.launch {
+            _status.value = WatchListStatus.LOADING
             try {
-                val moviesDeferred = MovieApi.retrofitService.getWatchlistMoviesAsync().await()
-                _movies.value = moviesDeferred
-                _status.value = WatchListStatsus.DONE
+                _movies.value = repository.getWatchlistMoviesAsync()
+                _status.value = WatchListStatus.DONE
             } catch (t: Throwable) {
                 t.printStackTrace()
-                _status.value = WatchListStatsus.ERROR
+                _status.value = WatchListStatus.ERROR
             }
         }
     }
@@ -52,10 +47,5 @@ class WatchlistViewModel : ViewModel() {
 
     fun doneNavigateToMovieDetail() {
         _navigateToMovieDetail.value = null
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }

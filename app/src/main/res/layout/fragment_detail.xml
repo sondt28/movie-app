@@ -48,7 +48,7 @@
             android:id="@+id/ivBookMark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.bookmark()}"
+            android:onClick="@{() -> viewModel.bookmarkMovie()}"
             android:paddingVertical="6dp"
             app:checkBookmark="@{viewModel.isBookmarked}"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"

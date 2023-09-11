@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -14,12 +15,12 @@ import com.son.movie.databinding.FragmentUpcomingBinding
 import com.son.movie.screens.home.HomeFragmentDirections
 import com.son.movie.screens.home.MovieItemTypeAdapter
 import com.son.movie.screens.home.viewpager.upcoming.UpcomingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PopularFragment : Fragment() {
     private lateinit var binding: FragmentPopularBinding
-    private val viewModel: PopularViewModel by lazy {
-        ViewModelProvider(this)[PopularViewModel::class.java]
-    }
+    private val viewModel: PopularViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,12 +30,16 @@ class PopularFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.rvMovies.adapter = MovieItemTypeAdapter(MovieItemTypeAdapter.OnclickItem {
-            viewModel.navigateToMovieDetails(it.id)
-        })
+        initView()
         handleObserve()
 
         return binding.root
+    }
+
+    private fun initView() {
+        binding.rvMovies.adapter = MovieItemTypeAdapter(MovieItemTypeAdapter.OnclickItem {
+            viewModel.navigateToMovieDetails(it.id)
+        })
     }
 
     private fun handleObserve() {

@@ -3,43 +3,37 @@ package com.son.movie.screens.home.viewpager.nowplaying
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.son.movie.model.Movie
-import com.son.movie.network.MovieApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import androidx.lifecycle.viewModelScope
+import com.son.movie.model.Movies
+import com.son.movie.repository.MovieRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 enum class NowPlayingStatus { LOADING, DONE, ERROR }
 
-class NowPlayingViewModel : ViewModel() {
-
-    private val viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+@HiltViewModel
+class NowPlayingViewModel @Inject constructor(private val repository: MovieRepository) :
+    ViewModel() {
 
     private val _status = MutableLiveData<NowPlayingStatus>()
-    val status: LiveData<NowPlayingStatus>
-        get() = _status
+    val status: LiveData<NowPlayingStatus> = _status
 
-    private val _movies = MutableLiveData<List<Movie>>()
-    val movie: LiveData<List<Movie>>
-        get() = _movies
+    private val _movies = MutableLiveData<Movies>()
+    val movie: LiveData<Movies> = _movies
+
     private val _navigateToMovieDetails = MutableLiveData<Int?>()
-    val navigateToMovieDetails:LiveData<Int?>
-        get() = _navigateToMovieDetails
-
+    val navigateToMovieDetails: LiveData<Int?> = _navigateToMovieDetails
 
     init {
         getNowPlayingMovies()
     }
 
     private fun getNowPlayingMovies() {
-        coroutineScope.launch {
+        viewModelScope.launch {
+            _status.value = NowPlayingStatus.LOADING
             try {
-                _status.value = NowPlayingStatus.LOADING
-                val moviesDeferred = MovieApi.retrofitService.getNowPlayingMoviesAsync().await()
-                _movies.value = moviesDeferred.results
-
+                _movies.value = repository.getNowPlayingMoviesAsync()
                 _status.value = NowPlayingStatus.DONE
             } catch (t: Throwable) {
                 t.printStackTrace()
@@ -47,15 +41,12 @@ class NowPlayingViewModel : ViewModel() {
             }
         }
     }
+
     fun navigateToMovieDetails(movieId: Int) {
         _navigateToMovieDetails.value = movieId
     }
 
     fun navigateToMovieDetailsComplete() {
         _navigateToMovieDetails.value = null
-    }
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }
