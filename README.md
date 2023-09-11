@@ -1,4 +1,4 @@
-# World of Movies - Movie App
+# Movie App
 
 ## Movie App
 
