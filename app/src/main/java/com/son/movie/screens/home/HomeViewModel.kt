@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 enum class MovieStatus { LOADING, ERROR, DONE }
+
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
     private val _status = MutableLiveData<MovieStatus>()
@@ -27,7 +28,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
         getTrendingMoviesToday()
     }
 
-    private fun getTrendingMoviesToday() {
+    fun getTrendingMoviesToday() {
         viewModelScope.launch {
             _status.value = MovieStatus.LOADING
             try {
@@ -40,9 +41,11 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
             }
         }
     }
+
     fun displayFilmDetails(movieId: Int) {
         _navigationToSelectFilm.value = movieId
     }
+
     fun displayFilmDetailsCompleted() {
         _navigationToSelectFilm.value = null
     }

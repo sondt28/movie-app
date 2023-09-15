@@ -71,10 +71,9 @@
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:listWatchlist="@{viewModel.movies}"
+                app:listWatchlist="@{viewModel.movies.data}"
                 tools:listitem="@layout/item_watchlist" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

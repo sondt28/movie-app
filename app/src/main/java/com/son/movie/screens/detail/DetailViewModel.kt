@@ -9,14 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.son.movie.model.BookmarkRequest
 import com.son.movie.model.Movie
-import com.son.movie.model.Trailer
-import com.son.movie.network.MovieApi
 import com.son.movie.repository.MovieRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 enum class MovieDetailsStatus { LOADING, ERROR, DONE }
 enum class BookmarkStatus { LOADING, ERROR, DONE }
@@ -65,11 +61,11 @@ class DetailViewModel @AssistedInject constructor(
     val showSnackbar: LiveData<Boolean> = _showSnackbar
 
     init {
-        onMovieDetails()
-        onBookmark()
+        getMovieDetails()
+        checkBookmarked()
     }
 
-    private fun onMovieDetails() {
+    private fun getMovieDetails() {
         viewModelScope.launch {
             _status.value = MovieDetailsStatus.LOADING
             try {
@@ -82,7 +78,7 @@ class DetailViewModel @AssistedInject constructor(
         }
     }
 
-    private fun onBookmark() {
+    private fun checkBookmarked() {
         viewModelScope.launch {
             try {
                 val watchlistMovies = repository.getWatchlistMoviesAsync()
@@ -93,7 +89,7 @@ class DetailViewModel @AssistedInject constructor(
         }
     }
 
-    fun bookmarkMovie() {
+    fun bookmark() {
         viewModelScope.launch {
             _bookmarkStatus.value = BookmarkStatus.LOADING
             try {
@@ -111,7 +107,7 @@ class DetailViewModel @AssistedInject constructor(
         }
     }
 
-    fun onTrailer() {
+    fun getTrailer() {
         viewModelScope.launch {
             try {
                 val movieVideos = repository.getMovieVideosAsync(movieId)

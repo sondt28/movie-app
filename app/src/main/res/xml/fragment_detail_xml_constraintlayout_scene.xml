@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+
+<!--        <OnClick-->
+<!--            motion:clickAction="toggle"-->
+<!--            motion:targetId="@+id/tvTitle" />-->
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+<!--        <Constraint-->
+<!--            android:id="@+id/tvTitleMovie"-->
+<!--            android:alpha="1"-->
+<!--            motion:layout_constraintEnd_toStartOf="@+id/rightGuideLine"-->
+<!--            motion:layout_constraintStart_toEndOf="@+id/ivPoster"-->
+<!--            motion:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />-->
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+<!--        <Constraint-->
+<!--            android:id="@+id/tvTitleMovie"-->
+<!--            android:alpha="0"-->
+<!--            motion:layout_constraintEnd_toStartOf="@+id/rightGuideLine"-->
+<!--            motion:layout_constraintStart_toEndOf="@+id/ivPoster"-->
+<!--            motion:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />-->
+    </ConstraintSet>
+</MotionScene>

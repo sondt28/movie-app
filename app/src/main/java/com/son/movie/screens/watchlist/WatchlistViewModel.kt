@@ -6,46 +6,37 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.son.movie.model.Movies
 import com.son.movie.repository.MovieRepository
+import com.son.movie.utils.DataResult
+import com.son.movie.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-enum class WatchListStatus { LOADING, ERROR, DONE }
-
 @HiltViewModel
-class WatchlistViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
+class WatchlistViewModel @Inject constructor(private val repository: MovieRepository) :
+    ViewModel() {
 
-    private val _status = MutableLiveData<WatchListStatus>()
-    val status: LiveData<WatchListStatus> = _status
+    private val _movies = MutableLiveData<DataResult<Movies>>()
+    val movies: LiveData<DataResult<Movies>> = _movies
 
-    private val _movies = MutableLiveData<Movies>()
-    val movies: LiveData<Movies> = _movies
-
-    private val _navigateToMovieDetail = MutableLiveData<Int?>()
-    val navigateToMovieDetail: LiveData<Int?> = _navigateToMovieDetail
+    private val _navigateToMovieDetail = MutableLiveData<Event<Int>>()
+    val navigateToMovieDetail: LiveData<Event<Int>> = _navigateToMovieDetail
 
     init {
         getOwnWatchlist()
     }
 
-     fun getOwnWatchlist() {
-        viewModelScope.launch {
-            _status.value = WatchListStatus.LOADING
-            try {
-                _movies.value = repository.getWatchlistMoviesAsync()
-                _status.value = WatchListStatus.DONE
-            } catch (t: Throwable) {
-                t.printStackTrace()
-                _status.value = WatchListStatus.ERROR
-            }
+    fun getOwnWatchlist() = viewModelScope.launch {
+        DataResult.loading(null)
+        try {
+            _movies.value = DataResult.success(repository.getWatchlistMoviesAsync())
+        } catch (t: Throwable) {
+            t.printStackTrace()
+            DataResult.error(t.message, null)
         }
     }
 
     fun navigateToMovieDetail(movieId: Int) {
-        _navigateToMovieDetail.value = movieId
-    }
-
-    fun doneNavigateToMovieDetail() {
-        _navigateToMovieDetail.value = null
+        _navigateToMovieDetail.value = Event(movieId)
     }
 }

@@ -10,11 +10,12 @@
             type="com.son.movie.screens.detail.DetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/dark_navy_blue"
+        app:layoutDescription="@xml/fragment_detail_xml_constraintlayout_scene"
         tools:context=".screens.detail.DetailFragment">
 
         <ImageView
@@ -48,7 +49,7 @@
             android:id="@+id/ivBookMark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.bookmarkMovie()}"
+            android:onClick="@{() -> viewModel.bookmark()}"
             android:paddingVertical="6dp"
             app:checkBookmark="@{viewModel.isBookmarked}"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
@@ -319,11 +320,11 @@
             android:id="@+id/ivPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.onTrailer()}"
+            android:onClick="@{() -> viewModel.getTrailer()}"
             app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toTopOf="@+id/ivBackdrop"
             app:srcCompat="@drawable/ic_play" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

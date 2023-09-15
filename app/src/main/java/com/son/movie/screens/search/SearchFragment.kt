@@ -34,11 +34,10 @@ class SearchFragment : Fragment() {
     }
 
     private fun handleObserver() {
-        viewModel.navigateToMovieDetails.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it)
+        viewModel.navigateToMovieDetails.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { movieId ->
+                val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(movieId)
                 findNavController().navigate(action)
-                viewModel.displayDetailsFilmComplete()
             }
         })
     }

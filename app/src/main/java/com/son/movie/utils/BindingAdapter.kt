@@ -11,7 +11,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.son.movie.R
 import com.son.movie.model.Genre
-import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.screens.detail.BookmarkStatus
 import com.son.movie.screens.home.MovieItemAdapter

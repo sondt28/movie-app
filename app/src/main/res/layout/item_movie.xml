@@ -10,25 +10,31 @@
             type="com.son.movie.model.Movie" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="144dp"
+            android:layout_height="212dp"
             android:layout_marginHorizontal="15dp"
-            app:cardCornerRadius="16dp">
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:imgUrl="@{movie.posterPath}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="16dp"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
-            <ImageView
-                android:layout_width="144dp"
-                android:layout_height="212dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                app:imgUrl="@{movie.posterPath}"
-                tools:src="@tools:sample/backgrounds/scenic" />
+<!--        <com.son.movie.customview.NumberView-->
+<!--            android:layout_marginTop="150dp"-->
+<!--            app:xxx="3"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/ivPoster"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ivPoster" />-->
 
-        </androidx.cardview.widget.CardView>
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
