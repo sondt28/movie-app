@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.son.movie.databinding.FragmentTopRatedBinding
 import com.son.movie.screens.home.HomeFragmentDirections
-import com.son.movie.screens.home.MovieItemTypeAdapter
+import com.son.movie.screens.home.viewpager.MovieItemTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

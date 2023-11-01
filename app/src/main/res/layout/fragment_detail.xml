@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
+        android:transitionName="@string/movie_card_trasition"
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,11 +24,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/ripple"
             android:onClick="@{() -> viewModel.backToPreviousDes()}"
             android:padding="16dp"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintEnd_toStartOf="@+id/tvTitle"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.bookmark()}"
-            android:paddingVertical="6dp"
+            android:padding="16dp"
+            android:background="@drawable/ripple"
             app:checkBookmark="@{viewModel.isBookmarked}"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
@@ -77,7 +79,7 @@
             android:layout_marginTop="16dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:imgUrl="@{viewModel.movie.backdropPath}"
+            app:imgUrl="@{viewModel.movie.data.backdropPath}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +120,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraintLayoutVote"
                 app:layout_constraintStart_toEndOf="@+id/ivStar"
                 app:layout_constraintTop_toTopOf="@id/constraintLayoutVote"
-                app:voteScoreFormat="@{viewModel.movie.voteAverage}" />
+                app:voteScoreFormat="@{viewModel.movie.data.voteAverage}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -129,7 +131,7 @@
             android:adjustViewBounds="true"
             android:background="@drawable/bg_poster_path"
             android:scaleType="centerCrop"
-            app:imgUrl="@{viewModel.movie.posterPath}"
+            app:imgUrl="@{viewModel.movie.data.posterPath}"
             app:layout_constraintBottom_toBottomOf="@+id/ivBackdrop"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toBottomOf="@+id/ivBackdrop"
@@ -142,7 +144,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:text="@{viewModel.movie.title}"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{viewModel.movie.data.title}"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -175,7 +179,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vLineOne"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ivCalendar"
-            app:releaseFormat="@{viewModel.movie.releaseDate}"
+            app:releaseFormat="@{viewModel.movie.data.releaseDate}"
             tools:text="2021" />
 
         <TextView
@@ -189,7 +193,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ivClock"
             app:layout_constraintTop_toBottomOf="@+id/ivPoster"
-            app:runtimeFormat="@{viewModel.movie.runtime}"
+            app:runtimeFormat="@{viewModel.movie.data.runtime}"
             tools:text="148 Minutes" />
 
         <TextView
@@ -198,7 +202,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/dark_slate_gray"
             android:textSize="12sp"
-            app:genresName="@{viewModel.movie.genres}"
+            app:genresName="@{viewModel.movie.data.genres}"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvRuntime"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintHorizontal_bias="0.5"
@@ -326,5 +330,6 @@
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toTopOf="@+id/ivBackdrop"
             app:srcCompat="@drawable/ic_play" />
+
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

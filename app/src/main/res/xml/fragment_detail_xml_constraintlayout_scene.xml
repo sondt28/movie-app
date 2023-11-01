@@ -5,17 +5,17 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
+        motion:duration="2000">
 
-<!--        <OnClick-->
-<!--            motion:clickAction="toggle"-->
-<!--            motion:targetId="@+id/tvTitle" />-->
+<!--                <OnClick-->
+<!--                    motion:clickAction="toggle"-->
+<!--                    motion:targetId="@+id/tvTitleMovie" />-->
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
 <!--        <Constraint-->
 <!--            android:id="@+id/tvTitleMovie"-->
-<!--            android:alpha="1"-->
+<!--            android:visibility="visible"-->
 <!--            motion:layout_constraintEnd_toStartOf="@+id/rightGuideLine"-->
 <!--            motion:layout_constraintStart_toEndOf="@+id/ivPoster"-->
 <!--            motion:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />-->
@@ -24,7 +24,7 @@
     <ConstraintSet android:id="@+id/end">
 <!--        <Constraint-->
 <!--            android:id="@+id/tvTitleMovie"-->
-<!--            android:alpha="0"-->
+<!--            android:visibility="gone"-->
 <!--            motion:layout_constraintEnd_toStartOf="@+id/rightGuideLine"-->
 <!--            motion:layout_constraintStart_toEndOf="@+id/ivPoster"-->
 <!--            motion:layout_constraintTop_toBottomOf="@+id/ivBackdrop" />-->

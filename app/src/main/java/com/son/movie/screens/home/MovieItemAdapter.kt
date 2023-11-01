@@ -31,6 +31,10 @@ class MovieItemAdapter(private val onClickListener: OnclickListener) :
         }
     }
 
+    class OnclickListener(val clickListener: (movie: Movie) -> Unit) {
+        fun onClick(movie: Movie) = clickListener(movie)
+    }
+
     companion object MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
@@ -39,9 +43,5 @@ class MovieItemAdapter(private val onClickListener: OnclickListener) :
         override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem == newItem
         }
-    }
-
-    class OnclickListener(val clickListener: (movie: Movie) -> Unit) {
-        fun onClick(movie: Movie) = clickListener(movie)
     }
 }

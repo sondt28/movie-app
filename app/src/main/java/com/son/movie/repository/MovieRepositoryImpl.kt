@@ -1,11 +1,17 @@
 package com.son.movie.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.son.movie.model.BookmarkRequest
 import com.son.movie.model.BookmarkResponse
 import com.son.movie.model.Movie
 import com.son.movie.model.Movies
 import com.son.movie.model.Trailers
 import com.son.movie.network.MovieApiService
+import com.son.movie.paging.MoviePagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -30,10 +36,10 @@ class MovieRepositoryImpl @Inject constructor(private val movieApi: MovieApiServ
         }
     }
 
-    override suspend fun getResultSearchAsync(query: String): Movies {
-        return withContext(Dispatchers.IO) {
-            movieApi.getResultSearchAsync(query).await()
-        }
+    override fun getResultSearchAsync(query: String): LiveData<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { MoviePagingSource(movieApi, query) }).liveData
     }
 
     override suspend fun getNowPlayingMoviesAsync(): Movies {

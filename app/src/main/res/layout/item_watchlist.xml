@@ -10,16 +10,17 @@
             type="com.son.movie.model.Movie" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
+        android:transitionName="@{@string/movie_card_trasition(movie.id)}"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="12dp"
-            tools:background="@color/dark_navy_blue">
+            android:layout_marginVertical="12dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivPoster"
@@ -36,6 +37,8 @@
                 android:id="@+id/tvMovieTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@{movie.title}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -104,5 +107,5 @@
                 app:runtimeFormat="@{movie.runtime}"
                 tools:text="139 minutes" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+    </LinearLayout>
 </layout>

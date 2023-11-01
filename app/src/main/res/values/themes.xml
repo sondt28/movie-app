@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/dark_navy_blue</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="textAppearanceHeadline6">@style/CustomHeadline6</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="Theme.Movie" parent="Base.Theme.Movie" />
@@ -20,5 +21,9 @@
     <style name="ThemeOverlay.SearchView" parent="">
         <item name="android:editTextColor">@color/white</item>
         <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="ThemeDiaLogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 </resources>

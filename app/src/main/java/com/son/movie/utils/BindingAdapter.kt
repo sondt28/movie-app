@@ -14,8 +14,7 @@ import com.son.movie.model.Genre
 import com.son.movie.model.Movies
 import com.son.movie.screens.detail.BookmarkStatus
 import com.son.movie.screens.home.MovieItemAdapter
-import com.son.movie.screens.home.MovieItemTypeAdapter
-import com.son.movie.screens.home.MovieStatus
+import com.son.movie.screens.home.viewpager.MovieItemTypeAdapter
 import com.son.movie.screens.search.SearchItemAdapter
 import com.son.movie.screens.watchlist.WatchlistItemAdapter
 
@@ -51,7 +50,7 @@ fun bindNowPlayingRecyclerView(recyclerView: RecyclerView, data: Movies?) {
 @BindingAdapter("listSearch")
 fun bindSearchRecyclerView(recyclerView: RecyclerView, data: Movies?) {
     val adapter = recyclerView.adapter as SearchItemAdapter
-    adapter.submitList(data?.results)
+
 }
 
 @BindingAdapter("checkBookmarkStatus")
@@ -116,34 +115,11 @@ fun bindImage(imgView: ImageView, posterPath: String?) {
 }
 
 @BindingAdapter("shimmer")
-fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: MovieStatus?) {
+fun bindingStatus(shimmerFrameLayout: ShimmerFrameLayout, status: DataResult.Status?) {
     when (status) {
-        MovieStatus.DONE -> shimmerFrameLayout.visibility = View.GONE
-        MovieStatus.LOADING -> shimmerFrameLayout.visibility = View.VISIBLE
+        DataResult.Status.SUCCESS -> shimmerFrameLayout.visibility = View.GONE
+        DataResult.Status.LOADING -> shimmerFrameLayout.visibility = View.VISIBLE
 
         else -> shimmerFrameLayout.visibility = View.VISIBLE
-    }
-}
-
-@BindingAdapter("movieStatus")
-fun bindStatus(statusImageView: ImageView, status: MovieStatus?) {
-    when (status) {
-        MovieStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-
-        MovieStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-
-        MovieStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-
-        else -> {
-
-        }
     }
 }

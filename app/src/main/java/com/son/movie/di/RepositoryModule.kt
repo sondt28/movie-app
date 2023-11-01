@@ -17,6 +17,4 @@ abstract class RepositoryModule {
     abstract fun bindMovieRepository(
         movieRepositoryImpl: MovieRepositoryImpl
     ) : MovieRepository
-
-
 }

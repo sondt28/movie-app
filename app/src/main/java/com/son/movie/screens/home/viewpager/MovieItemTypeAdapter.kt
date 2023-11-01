@@ -1,4 +1,4 @@
-package com.son.movie.screens.home
+package com.son.movie.screens.home.viewpager
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

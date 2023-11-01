@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.son.movie.R
 import com.son.movie.databinding.FragmentWatchListBinding
+import com.son.movie.utils.Animation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,15 +43,21 @@ class WatchListFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        binding.rvMovies.adapter = WatchlistItemAdapter(WatchlistItemAdapter.OnclickItem {
+        val watchlistItemAdapter = WatchlistItemAdapter(WatchlistItemAdapter.OnclickItem {
             viewModel.navigateToMovieDetail(it.id)
         })
+
+        binding.rvMovies.apply {
+            adapter = watchlistItemAdapter
+            layoutAnimation = Animation.setAnimation(requireContext())
+        }
     }
 
     private fun setupObserver() {
-        viewModel.navigateToMovieDetail.observe(viewLifecycleOwner, Observer {event ->
-            event.getContentIfNotHandled()?.let {movieId ->
-                val action = WatchListFragmentDirections.actionWatchListFragmentToDetailFragment(movieId)
+        viewModel.navigateToMovieDetail.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { movieId ->
+                val action =
+                    WatchListFragmentDirections.actionWatchListFragmentToDetailFragment(movieId)
                 findNavController().navigate(action)
             }
         })

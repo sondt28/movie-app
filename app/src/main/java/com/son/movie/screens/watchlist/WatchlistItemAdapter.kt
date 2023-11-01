@@ -19,18 +19,14 @@ class WatchlistItemAdapter(private val onClickItem: OnclickItem) :
         }
     }
 
-    companion object WatchlistDiffCallBack : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchlistItemViewHolder {
-        return WatchlistItemViewHolder(ItemWatchlistBinding.inflate(LayoutInflater.from(parent.context)))
+        return WatchlistItemViewHolder(
+            ItemWatchlistBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: WatchlistItemViewHolder, position: Int) {
@@ -41,5 +37,15 @@ class WatchlistItemAdapter(private val onClickItem: OnclickItem) :
 
     class OnclickItem(private val onClickItem: (movie: Movie) -> Unit) {
         fun onClickMovie(movie: Movie) = onClickItem(movie)
+    }
+
+    companion object WatchlistDiffCallBack : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
     }
 }

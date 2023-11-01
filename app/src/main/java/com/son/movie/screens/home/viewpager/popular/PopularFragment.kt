@@ -7,14 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.son.movie.R
 import com.son.movie.databinding.FragmentPopularBinding
-import com.son.movie.databinding.FragmentUpcomingBinding
 import com.son.movie.screens.home.HomeFragmentDirections
-import com.son.movie.screens.home.MovieItemTypeAdapter
-import com.son.movie.screens.home.viewpager.upcoming.UpcomingViewModel
+import com.son.movie.screens.home.viewpager.MovieItemTypeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -3,8 +3,8 @@ package com.son.movie.network
 import com.son.movie.model.BookmarkRequest
 import com.son.movie.model.BookmarkResponse
 import com.son.movie.model.Movie
-import com.son.movie.model.Trailers
 import com.son.movie.model.Movies
+import com.son.movie.model.Trailers
 import com.son.movie.utils.Constant.ACCOUNT_ID
 import com.son.movie.utils.Constant.API_KEY
 import com.son.movie.utils.Constant.BEARER_TOKEN
@@ -35,7 +35,9 @@ interface MovieApiService {
     @GET("search/movie")
     fun getResultSearchAsync(
         @Query("query") query: String,
-        @Query("api_key") apiKey: String = API_KEY
+        @Query("include_adult") adult: String = "false",
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("page") page: Int = 1
     ): Deferred<Movies>
 
     @GET("movie/now_playing")

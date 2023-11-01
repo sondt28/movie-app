@@ -7,7 +7,7 @@ import com.son.movie.screens.detail.viewpager.cast.CastFragment
 import com.son.movie.screens.detail.viewpager.overview.OverviewFragment
 import com.son.movie.screens.detail.viewpager.reviews.ReviewsFragment
 
-class DemoMovieDetailAdapter(fragment: Fragment, private val overview: String) : FragmentStateAdapter(fragment) {
+class DemoMovieDetailAdapter(fragment: Fragment, private val overview: String?) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = 3
 

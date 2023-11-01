@@ -10,7 +10,7 @@ import com.son.movie.model.Trailers
 
 class FakeMovieRepository() : MovieRepository {
 
-    private
+    val movies = mutableListOf<Movie>()
 
     val fakeBookmarkRequest = BookmarkRequest(
         mediaId = 123,
@@ -67,7 +67,7 @@ class FakeMovieRepository() : MovieRepository {
 
     val fakeMovies = Movies(
         page = 1,
-        results = listOf(fakeMovie, fakeMovie1, fakeMovie2)
+        results = movies
     )
 
     val fakeTrailer = Trailer(
@@ -117,5 +117,11 @@ class FakeMovieRepository() : MovieRepository {
 
     override suspend fun addToWatchlistAsync(bookmarkRequest: BookmarkRequest): BookmarkResponse {
         return fakeBookmarkResponse
+    }
+
+    fun addMovies(vararg listMovie: Movie) {
+        for (movie in listMovie) {
+            movies.add(movie)
+        }
     }
 }
